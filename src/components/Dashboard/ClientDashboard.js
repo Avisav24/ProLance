@@ -135,7 +135,7 @@ const ClientDashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="card">
           <div className="card-body">
             <div className="flex items-center">
@@ -180,22 +180,6 @@ const ClientDashboard = () => {
                 <p className="text-sm font-medium text-gray-500">Completed</p>
                 <p className="text-2xl font-semibold text-gray-900">
                   {stats.completed}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="card">
-          <div className="card-body">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <DollarSign className="h-8 w-8 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Total Spent</p>
-                <p className="text-2xl font-semibold text-gray-900">
-                  ₹{stats.totalSpent.toLocaleString()}
                 </p>
               </div>
             </div>

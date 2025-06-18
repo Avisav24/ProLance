@@ -20,6 +20,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { useNotifications } from "../../contexts/NotificationContext";
 import toast from "react-hot-toast";
 
 const AllProjects = () => {
@@ -34,6 +35,7 @@ const AllProjects = () => {
     price: "",
     notes: "",
   });
+  const { createNotification } = useNotifications();
 
   useEffect(() => {
     fetchProjects();
@@ -109,6 +111,15 @@ const AllProjects = () => {
         updatedAt: new Date(),
       });
 
+      // Send notification to client
+      await createNotification(
+        selectedProject.clientId,
+        "Project Approved",
+        `Your project "${selectedProject.title}" has been approved with a price of ₹${pricingData.price}. Please complete the payment to start work.`,
+        "success",
+        selectedProject.id
+      );
+
       toast.success("Project approved and priced successfully");
       setShowPricingModal(false);
       setSelectedProject(null);
@@ -122,11 +133,23 @@ const AllProjects = () => {
 
   const updateProjectStatus = async (projectId, newStatus) => {
     try {
+      const project = projects.find((p) => p.id === projectId);
       const projectRef = doc(db, "projects", projectId);
       await updateDoc(projectRef, {
         status: newStatus,
         updatedAt: new Date(),
       });
+
+      // Send notification to client
+      await createNotification(
+        project.clientId,
+        "Project Status Updated",
+        `Your project "${
+          project.title
+        }" status has been updated to ${newStatus.replace("-", " ")}.`,
+        "info",
+        project.id
+      );
 
       toast.success("Project status updated successfully");
       fetchProjects(); // Refresh projects

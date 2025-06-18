@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNotifications } from "../../contexts/NotificationContext";
 import {
   Menu,
   X,
@@ -9,13 +10,19 @@ import {
   Settings,
   Bell,
   GraduationCap,
+  Check,
+  AlertCircle,
+  Info,
 } from "lucide-react";
 
 const Header = () => {
   const { currentUser, userProfile, logout } = useAuth();
+  const { notifications, unreadCount, markAsRead, markAllAsRead } =
+    useNotifications();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -23,6 +30,36 @@ const Header = () => {
       navigate("/login");
     } catch (error) {
       console.error("Failed to log out:", error);
+    }
+  };
+
+  const handleNotificationClick = (notification) => {
+    if (!notification.read) {
+      markAsRead(notification.id);
+    }
+
+    // Navigate based on notification type
+    if (notification.projectId) {
+      if (userProfile?.role === "admin") {
+        navigate(`/admin/project/${notification.projectId}`);
+      } else {
+        navigate(`/project/${notification.projectId}`);
+      }
+    }
+
+    setIsNotificationMenuOpen(false);
+  };
+
+  const getNotificationIcon = (type) => {
+    switch (type) {
+      case "success":
+        return <Check className="h-4 w-4 text-green-500" />;
+      case "warning":
+        return <AlertCircle className="h-4 w-4 text-yellow-500" />;
+      case "error":
+        return <AlertCircle className="h-4 w-4 text-red-500" />;
+      default:
+        return <Info className="h-4 w-4 text-blue-500" />;
     }
   };
 
@@ -73,9 +110,85 @@ const Header = () => {
             {currentUser ? (
               <>
                 {/* Notifications */}
-                <button className="p-2 text-gray-400 hover:text-gray-500">
-                  <Bell className="h-5 w-5" />
-                </button>
+                <div className="relative">
+                  <button
+                    onClick={() =>
+                      setIsNotificationMenuOpen(!isNotificationMenuOpen)
+                    }
+                    className="p-2 text-gray-400 hover:text-gray-500 relative"
+                  >
+                    <Bell className="h-5 w-5" />
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {unreadCount > 9 ? "9+" : unreadCount}
+                      </span>
+                    )}
+                  </button>
+
+                  {isNotificationMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-50 max-h-96 overflow-y-auto">
+                      <div className="px-4 py-2 border-b border-gray-100 flex items-center justify-between">
+                        <h3 className="text-sm font-medium text-gray-900">
+                          Notifications
+                        </h3>
+                        {unreadCount > 0 && (
+                          <button
+                            onClick={markAllAsRead}
+                            className="text-xs text-primary-600 hover:text-primary-500"
+                          >
+                            Mark all as read
+                          </button>
+                        )}
+                      </div>
+
+                      {notifications.length > 0 ? (
+                        notifications.slice(0, 10).map((notification) => (
+                          <button
+                            key={notification.id}
+                            onClick={() =>
+                              handleNotificationClick(notification)
+                            }
+                            className={`w-full text-left px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 ${
+                              !notification.read ? "bg-blue-50" : ""
+                            }`}
+                          >
+                            <div className="flex items-start space-x-3">
+                              {getNotificationIcon(notification.type)}
+                              <div className="flex-1 min-w-0">
+                                <p
+                                  className={`text-sm font-medium ${
+                                    !notification.read
+                                      ? "text-gray-900"
+                                      : "text-gray-700"
+                                  }`}
+                                >
+                                  {notification.title}
+                                </p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  {notification.message}
+                                </p>
+                                <p className="text-xs text-gray-400 mt-1">
+                                  {notification.createdAt?.toDate?.()
+                                    ? new Date(
+                                        notification.createdAt.toDate()
+                                      ).toLocaleString()
+                                    : "Just now"}
+                                </p>
+                              </div>
+                              {!notification.read && (
+                                <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 mt-1"></div>
+                              )}
+                            </div>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="px-4 py-3 text-sm text-gray-500">
+                          No notifications
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 {/* User Menu */}
                 <div className="relative">

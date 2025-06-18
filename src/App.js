@@ -4,9 +4,11 @@ import {
   Routes,
   Route,
   Navigate,
+  Link,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { NotificationProvider } from "./contexts/NotificationContext";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
@@ -17,6 +19,7 @@ import AdminDashboard from "./components/Admin/AdminDashboard";
 import AllProjects from "./components/Admin/AllProjects";
 import Clients from "./components/Admin/Clients";
 import Analytics from "./components/Admin/Analytics";
+import AdminProjectDetail from "./components/Admin/AdminProjectDetail";
 import ProjectDetail from "./components/Projects/ProjectDetail";
 import Chat from "./components/Chat/Chat";
 import Profile from "./components/Profile/Profile";
@@ -74,6 +77,16 @@ const PublicRoute = ({ children }) => {
   return children;
 };
 
+// Auth Route Component (accessible to everyone, no redirects)
+const AuthRoute = ({ children }) => {
+  return children;
+};
+
+// Landing Route Component (accessible to everyone, no redirects)
+const LandingRoute = ({ children }) => {
+  return children;
+};
+
 // Landing Page Component
 const LandingPage = () => {
   return (
@@ -91,12 +104,12 @@ const LandingPage = () => {
             deadline.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/signup" className="btn-primary text-lg px-8 py-3">
+            <Link to="/signup" className="btn-primary text-lg px-8 py-3">
               Get Started with Gradely
-            </a>
-            <a href="/login" className="btn-outline text-lg px-8 py-3">
+            </Link>
+            <Link to="/login" className="btn-outline text-lg px-8 py-3">
               Sign In
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -239,190 +252,199 @@ function App() {
       }}
     >
       <AuthProvider>
-        <div className="App">
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: "#363636",
-                color: "#fff",
-              },
-              success: {
-                duration: 3000,
-                iconTheme: {
-                  primary: "#22c55e",
-                  secondary: "#fff",
-                },
-              },
-              error: {
+        <NotificationProvider>
+          <div className="App">
+            <Toaster
+              position="top-right"
+              toastOptions={{
                 duration: 4000,
-                iconTheme: {
-                  primary: "#ef4444",
-                  secondary: "#fff",
+                style: {
+                  background: "#363636",
+                  color: "#fff",
                 },
-              },
-            }}
-          />
-
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/login"
-              element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <PublicRoute>
-                  <Signup />
-                </PublicRoute>
-              }
+                success: {
+                  duration: 3000,
+                  iconTheme: {
+                    primary: "#22c55e",
+                    secondary: "#fff",
+                  },
+                },
+                error: {
+                  duration: 4000,
+                  iconTheme: {
+                    primary: "#ef4444",
+                    secondary: "#fff",
+                  },
+                },
+              }}
             />
 
-            {/* Protected Client Routes */}
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute allowedRoles={["client"]}>
-                  <Layout>
-                    <ClientDashboard />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/new-project"
-              element={
-                <ProtectedRoute allowedRoles={["client"]}>
-                  <Layout>
-                    <NewProject />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/my-projects"
-              element={
-                <ProtectedRoute allowedRoles={["client"]}>
-                  <Layout>
-                    <MyProjects />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/project/:id"
-              element={
-                <ProtectedRoute allowedRoles={["client"]}>
-                  <Layout>
-                    <ProjectDetail />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/chat/:projectId"
-              element={
-                <ProtectedRoute allowedRoles={["client"]}>
-                  <Layout>
-                    <Chat />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Profile />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Settings />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
+            <Routes>
+              {/* Public Routes */}
+              <Route
+                path="/"
+                element={
+                  <LandingRoute>
+                    <LandingPage />
+                  </LandingRoute>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <AuthRoute>
+                    <Login />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <AuthRoute>
+                    <Signup />
+                  </AuthRoute>
+                }
+              />
 
-            {/* Protected Admin Routes */}
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <Layout>
-                    <AdminDashboard />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/projects"
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <Layout>
-                    <AllProjects />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/clients"
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <Layout>
-                    <Clients />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/analytics"
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <Layout>
-                    <Analytics />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/project/:id"
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <Layout>
-                    <ProjectDetail />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/chat/:projectId"
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <Layout>
-                    <Chat />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
+              {/* Protected Client Routes */}
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={["client"]}>
+                    <Layout>
+                      <ClientDashboard />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/new-project"
+                element={
+                  <ProtectedRoute allowedRoles={["client"]}>
+                    <Layout>
+                      <NewProject />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-projects"
+                element={
+                  <ProtectedRoute allowedRoles={["client"]}>
+                    <Layout>
+                      <MyProjects />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/project/:id"
+                element={
+                  <ProtectedRoute allowedRoles={["client"]}>
+                    <Layout>
+                      <ProjectDetail />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chat/:projectId"
+                element={
+                  <ProtectedRoute allowedRoles={["client"]}>
+                    <Layout>
+                      <Chat />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <Profile />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <Settings />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Catch all route */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
+              {/* Protected Admin Routes */}
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute allowedRoles={["admin"]}>
+                    <Layout>
+                      <AdminDashboard />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/projects"
+                element={
+                  <ProtectedRoute allowedRoles={["admin"]}>
+                    <Layout>
+                      <AllProjects />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/clients"
+                element={
+                  <ProtectedRoute allowedRoles={["admin"]}>
+                    <Layout>
+                      <Clients />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/analytics"
+                element={
+                  <ProtectedRoute allowedRoles={["admin"]}>
+                    <Layout>
+                      <Analytics />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/project/:id"
+                element={
+                  <ProtectedRoute allowedRoles={["admin"]}>
+                    <Layout>
+                      <AdminProjectDetail />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/chat/:projectId"
+                element={
+                  <ProtectedRoute allowedRoles={["admin"]}>
+                    <Layout>
+                      <Chat />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Catch all route */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+        </NotificationProvider>
       </AuthProvider>
     </Router>
   );

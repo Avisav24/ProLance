@@ -271,8 +271,22 @@ const AllProjects = () => {
                           <div className="text-sm font-medium text-gray-900">
                             {project.title}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            {project.category || "No category"}
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {project.categories &&
+                            project.categories.length > 0 ? (
+                              project.categories.map((cat, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
+                                >
+                                  {cat}
+                                </span>
+                              ))
+                            ) : (
+                              <span className="text-sm text-gray-500">
+                                {project.category || "No category"}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </td>

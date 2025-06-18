@@ -70,6 +70,10 @@ const MyProjects = () => {
         (project) =>
           project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           project.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (project.categories &&
+            project.categories.some((cat) =>
+              cat.toLowerCase().includes(searchTerm.toLowerCase())
+            )) ||
           project.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
@@ -244,10 +248,29 @@ const MyProjects = () => {
                             <h3 className="text-lg font-medium text-gray-900">
                               {project.title}
                             </h3>
-                            <p className="text-sm text-gray-500">
-                              {project.category || "No category"} •{" "}
-                              {project.status}
-                            </p>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <div className="flex flex-wrap gap-1">
+                                {project.categories &&
+                                project.categories.length > 0 ? (
+                                  project.categories.map((cat, index) => (
+                                    <span
+                                      key={index}
+                                      className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
+                                    >
+                                      {cat}
+                                    </span>
+                                  ))
+                                ) : (
+                                  <span className="text-sm text-gray-500">
+                                    {project.category || "No category"}
+                                  </span>
+                                )}
+                              </div>
+                              <span className="text-gray-400">•</span>
+                              <span className="text-sm text-gray-500">
+                                {project.status}
+                              </span>
+                            </div>
                           </div>
                         </div>
 

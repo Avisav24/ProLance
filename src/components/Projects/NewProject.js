@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase/config";
-import { FileText, Calendar, DollarSign, Send } from "lucide-react";
+import { FileText, Calendar, DollarSign, Send, Check } from "lucide-react";
 import toast from "react-hot-toast";
 
 const NewProject = () => {
@@ -14,21 +14,12 @@ const NewProject = () => {
     title: "",
     description: "",
     requirements: "",
-    category: "",
+    categories: [],
     deadline: "",
     budget: "",
   });
 
-  const categories = [
-    "Web Development",
-    "Mobile App Development",
-    "Desktop Application",
-    "Database Design",
-    "Machine Learning",
-    "Data Analysis",
-    "UI/UX Design",
-    "Other",
-  ];
+  const categories = ["Project", "Report", "Assignment", "PPT"];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,11 +29,25 @@ const NewProject = () => {
     }));
   };
 
+  const handleCategoryChange = (category) => {
+    setFormData((prev) => ({
+      ...prev,
+      categories: prev.categories.includes(category)
+        ? prev.categories.filter((cat) => cat !== category)
+        : [...prev.categories, category],
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.title || !formData.description || !formData.requirements) {
       toast.error("Please fill in all required fields");
+      return;
+    }
+
+    if (formData.categories.length === 0) {
+      toast.error("Please select at least one category");
       return;
     }
 
@@ -56,8 +61,9 @@ const NewProject = () => {
         title: formData.title,
         description: formData.description,
         requirements: formData.requirements,
-        category: formData.category,
-        deadline: new Date(formData.deadline),
+        categories: formData.categories,
+        category: formData.categories.join(", "), // Keep for backward compatibility
+        deadline: formData.deadline ? new Date(formData.deadline) : null,
         budget: parseFloat(formData.budget) || 0,
         status: "pending",
         price: 0,
@@ -111,28 +117,43 @@ const NewProject = () => {
               />
             </div>
 
-            {/* Category */}
+            {/* Categories */}
             <div>
-              <label
-                htmlFor="category"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Project Category
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Project Categories *
               </label>
-              <select
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="input mt-1"
-              >
-                <option value="">Select a category</option>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
+                  <label
+                    key={category}
+                    className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                      formData.categories.includes(category)
+                        ? "border-primary-500 bg-primary-50 text-primary-700"
+                        : "border-gray-300 hover:border-gray-400"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.categories.includes(category)}
+                      onChange={() => handleCategoryChange(category)}
+                      className="sr-only"
+                    />
+                    <div className="flex items-center space-x-2">
+                      {formData.categories.includes(category) ? (
+                        <Check className="h-4 w-4 text-primary-600" />
+                      ) : (
+                        <div className="h-4 w-4 border-2 border-gray-300 rounded"></div>
+                      )}
+                      <span className="text-sm font-medium">{category}</span>
+                    </div>
+                  </label>
                 ))}
-              </select>
+              </div>
+              {formData.categories.length > 0 && (
+                <p className="mt-2 text-sm text-gray-500">
+                  Selected: {formData.categories.join(", ")}
+                </p>
+              )}
             </div>
 
             {/* Description */}

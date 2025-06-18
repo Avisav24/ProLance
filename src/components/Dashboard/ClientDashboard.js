@@ -63,7 +63,9 @@ const ClientDashboard = () => {
         pending: projectsData.filter((p) => p.status === "pending").length,
         inProgress: projectsData.filter((p) => p.status === "in-progress")
           .length,
-        completed: projectsData.filter((p) => p.status === "completed").length,
+        completed: projectsData.filter(
+          (p) => p.status === "completed" || p.status === "delivered"
+        ).length,
         totalSpent: projectsData.reduce(
           (sum, p) => sum + (p.totalAmount || 0),
           0
@@ -226,9 +228,22 @@ const ClientDashboard = () => {
                       <p className="text-sm font-medium text-gray-900 truncate">
                         {project.title}
                       </p>
-                      <p className="text-xs text-gray-500">
-                        {project.category || "No category"}
-                      </p>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {project.categories && project.categories.length > 0 ? (
+                          project.categories.map((cat, index) => (
+                            <span
+                              key={index}
+                              className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
+                            >
+                              {cat}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-xs text-gray-500">
+                            {project.category || "No category"}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     {getStatusBadge(project.status)}
                   </div>
@@ -283,9 +298,22 @@ const ClientDashboard = () => {
                       <h4 className="text-sm font-medium text-gray-900">
                         {project.title}
                       </h4>
-                      <p className="text-sm text-gray-500">
-                        {project.category || "No category"} • {project.status}
-                      </p>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {project.categories && project.categories.length > 0 ? (
+                          project.categories.map((cat, index) => (
+                            <span
+                              key={index}
+                              className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
+                            >
+                              {cat}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-xs text-gray-500">
+                            {project.category || "No category"}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">

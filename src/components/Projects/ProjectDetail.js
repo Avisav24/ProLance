@@ -180,7 +180,22 @@ const ProjectDetail = () => {
             <h1 className="text-2xl font-bold text-gray-900">
               {project.title}
             </h1>
-            <p className="text-gray-600">{project.category}</p>
+            <div className="flex flex-wrap gap-1 mt-1">
+              {project.categories && project.categories.length > 0 ? (
+                project.categories.map((cat, index) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
+                  >
+                    {cat}
+                  </span>
+                ))
+              ) : (
+                <p className="text-gray-600">
+                  {project.category || "No category"}
+                </p>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex items-center space-x-3">
@@ -234,11 +249,26 @@ const ProjectDetail = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Category
+                      Categories
                     </label>
-                    <p className="text-sm text-gray-900 mt-1">
-                      {project.category || "Not specified"}
-                    </p>
+                    <div className="mt-1">
+                      {project.categories && project.categories.length > 0 ? (
+                        <div className="flex flex-wrap gap-1">
+                          {project.categories.map((cat, index) => (
+                            <span
+                              key={index}
+                              className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-primary-100 text-primary-800"
+                            >
+                              {cat}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-gray-900">
+                          {project.category || "Not specified"}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">

@@ -11,7 +11,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { collection, query, getDocs, where, orderBy } from "firebase/firestore";
+import { collection, query, getDocs, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 
@@ -34,23 +34,26 @@ const Clients = () => {
   const fetchClients = async () => {
     try {
       const usersRef = collection(db, "users");
-      const q = query(
-        usersRef,
-        where("role", "==", "client"),
-        orderBy("createdAt", "desc")
-      );
+      const q = query(usersRef, where("role", "==", "client"));
       const querySnapshot = await getDocs(q);
       const clientsData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
+      // Sort by createdAt in JavaScript (newest first)
+      const sortedClients = clientsData.sort((a, b) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB - dateA;
+      });
+
       // Fetch project counts for each client
       const projectsRef = collection(db, "projects");
       const projectsSnapshot = await getDocs(projectsRef);
       const allProjects = projectsSnapshot.docs.map((doc) => doc.data());
 
-      const clientsWithStats = clientsData.map((client) => {
+      const clientsWithStats = sortedClients.map((client) => {
         const clientProjects = allProjects.filter(
           (p) => p.clientId === client.uid
         );

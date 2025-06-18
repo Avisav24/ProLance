@@ -14,8 +14,8 @@ import {
   collection,
   query,
   getDocs,
-  orderBy,
   where,
+  limit,
   updateDoc,
   doc,
 } from "firebase/firestore";
@@ -46,13 +46,21 @@ const AllProjects = () => {
   const fetchProjects = async () => {
     try {
       const projectsRef = collection(db, "projects");
-      const q = query(projectsRef, orderBy("createdAt", "desc"));
+      const q = query(projectsRef);
       const querySnapshot = await getDocs(q);
       const projectsData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setProjects(projectsData);
+
+      // Sort by createdAt in JavaScript (newest first)
+      const sortedProjects = projectsData.sort((a, b) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB - dateA;
+      });
+
+      setProjects(sortedProjects);
     } catch (error) {
       console.error("Error fetching projects:", error);
       toast.error("Failed to load projects");
@@ -276,7 +284,7 @@ const AllProjects = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">
                           <Link
-                            to={`/project/${project.id}`}
+                            to={`/admin/project/${project.id}`}
                             className="btn-outline btn-sm"
                           >
                             <Eye className="h-4 w-4 mr-1" />

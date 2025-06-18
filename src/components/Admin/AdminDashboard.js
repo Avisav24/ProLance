@@ -12,14 +12,7 @@ import {
   Eye,
   MessageSquare,
 } from "lucide-react";
-import {
-  collection,
-  query,
-  getDocs,
-  orderBy,
-  limit,
-  where,
-} from "firebase/firestore";
+import { collection, query, getDocs, where, limit } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 
@@ -46,12 +39,19 @@ const AdminDashboard = () => {
     try {
       // Fetch all projects
       const projectsRef = collection(db, "projects");
-      const projectsQuery = query(projectsRef, orderBy("createdAt", "desc"));
+      const projectsQuery = query(projectsRef);
       const projectsSnapshot = await getDocs(projectsQuery);
       const projects = projectsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+
+      // Sort by createdAt in JavaScript (newest first)
+      const sortedProjects = projects.sort((a, b) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB - dateA;
+      });
 
       // Fetch all users (clients)
       const usersRef = collection(db, "users");
@@ -100,7 +100,7 @@ const AdminDashboard = () => {
       });
 
       // Set recent projects
-      setRecentProjects(projects.slice(0, 5));
+      setRecentProjects(sortedProjects.slice(0, 5));
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
       toast.error("Failed to load dashboard data");

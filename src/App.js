@@ -39,7 +39,12 @@ const ProtectedRoute = ({ children, allowedRoles = ["client", "admin"] }) => {
   }
 
   if (allowedRoles && !allowedRoles.includes(userProfile?.role)) {
-    return <Navigate to="/dashboard" replace />;
+    // Redirect based on user role
+    if (userProfile?.role === "admin") {
+      return <Navigate to="/admin" replace />;
+    } else {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return children;
@@ -47,7 +52,7 @@ const ProtectedRoute = ({ children, allowedRoles = ["client", "admin"] }) => {
 
 // Public Route Component (redirects if already logged in)
 const PublicRoute = ({ children }) => {
-  const { currentUser, loading } = useAuth();
+  const { currentUser, userProfile, loading } = useAuth();
 
   if (loading) {
     return (
@@ -58,7 +63,12 @@ const PublicRoute = ({ children }) => {
   }
 
   if (currentUser) {
-    return <Navigate to="/dashboard" replace />;
+    // Redirect based on user role
+    if (userProfile?.role === "admin") {
+      return <Navigate to="/admin" replace />;
+    } else {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return children;
@@ -384,6 +394,16 @@ function App() {
                 <ProtectedRoute allowedRoles={["admin"]}>
                   <Layout>
                     <Analytics />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/project/:id"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <Layout>
+                    <ProjectDetail />
                   </Layout>
                 </ProtectedRoute>
               }

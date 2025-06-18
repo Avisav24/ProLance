@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, userProfile } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -22,9 +22,15 @@ const Login = () => {
 
     setLoading(true);
     try {
-      await login(email, password);
+      const { user, profile } = await login(email, password);
       toast.success("Welcome back to Gradely!");
-      navigate("/dashboard");
+
+      // Redirect based on user role
+      if (profile?.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Login error:", error);
       toast.error(error.message || "Failed to sign in");

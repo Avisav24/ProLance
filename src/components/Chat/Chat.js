@@ -8,7 +8,6 @@ import {
   addDoc,
   onSnapshot,
   query,
-  orderBy,
   serverTimestamp,
   getDoc,
   setDoc,
@@ -51,11 +50,7 @@ const Chat = () => {
 
   const setupChatListener = () => {
     const chatRef = collection(db, "chats");
-    const chatQuery = query(
-      chatRef,
-      where("projectId", "==", projectId),
-      orderBy("createdAt", "asc")
-    );
+    const chatQuery = query(chatRef, where("projectId", "==", projectId));
 
     const unsubscribe = onSnapshot(
       chatQuery,
@@ -64,7 +59,15 @@ const Chat = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setMessages(messagesData);
+
+        // Sort by createdAt in JavaScript
+        const sortedMessages = messagesData.sort((a, b) => {
+          const dateA = a.createdAt?.toDate?.() || new Date(0);
+          const dateB = b.createdAt?.toDate?.() || new Date(0);
+          return dateA - dateB; // Ascending order for chat
+        });
+
+        setMessages(sortedMessages);
         setLoading(false);
       },
       (error) => {

@@ -68,7 +68,13 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      return userCredential.user;
+      const user = userCredential.user;
+
+      // Fetch user profile immediately after login
+      const profile = await fetchUserProfile(user.uid);
+      setUserProfile(profile);
+
+      return { user, profile };
     } catch (error) {
       throw error;
     }

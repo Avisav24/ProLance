@@ -37,12 +37,19 @@ const Analytics = () => {
     try {
       // Fetch all projects
       const projectsRef = collection(db, "projects");
-      const projectsQuery = query(projectsRef, orderBy("createdAt", "desc"));
+      const projectsQuery = query(projectsRef);
       const projectsSnapshot = await getDocs(projectsQuery);
-      const projects = projectsSnapshot.docs.map((doc) => ({
+      let projects = projectsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+
+      // Sort by createdAt in JavaScript (newest first)
+      projects = projects.sort((a, b) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB - dateA;
+      });
 
       // Fetch all clients
       const usersRef = collection(db, "users");

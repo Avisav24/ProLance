@@ -408,6 +408,16 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/admin/chat/:projectId"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <Layout>
+                    <Chat />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
 
             {/* Catch all route */}
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [paymentProof, setPaymentProof] = useState("");
@@ -127,6 +127,24 @@ const ProjectDetail = () => {
     return descriptions[status] || "Status information not available.";
   };
 
+  // Get the correct chat route based on user role
+  const getChatRoute = () => {
+    if (userProfile?.role === "admin") {
+      return `/admin/chat/${project.id}`;
+    } else {
+      return `/chat/${project.id}`;
+    }
+  };
+
+  // Get the correct back route based on user role
+  const getBackRoute = () => {
+    if (userProfile?.role === "admin") {
+      return "/admin/projects";
+    } else {
+      return "/my-projects";
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -142,7 +160,7 @@ const ProjectDetail = () => {
         <p className="text-gray-500 mt-2">
           The project you're looking for doesn't exist.
         </p>
-        <Link to="/my-projects" className="btn-primary mt-4">
+        <Link to={getBackRoute()} className="btn-primary mt-4">
           Back to Projects
         </Link>
       </div>
@@ -154,7 +172,7 @@ const ProjectDetail = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Link to="/my-projects" className="btn-outline">
+          <Link to={getBackRoute()} className="btn-outline">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Link>
@@ -167,7 +185,7 @@ const ProjectDetail = () => {
         </div>
         <div className="flex items-center space-x-3">
           {getStatusBadge(project.status)}
-          <Link to={`/chat/${project.id}`} className="btn-primary">
+          <Link to={getChatRoute()} className="btn-primary">
             <MessageSquare className="h-4 w-4 mr-2" />
             Chat
           </Link>

@@ -269,15 +269,22 @@ const AdminProjectDetail = () => {
           </div>
         );
       case "approved":
-        return (
-          <button
-            onClick={() => updateProjectStatus("in-progress")}
-            className="btn-success"
-          >
-            <AlertCircle className="h-4 w-4 mr-2" />
-            Start Development
-          </button>
-        );
+        if (
+          ["paid", "pending_verification", "done"].includes(
+            project.paymentStatus
+          )
+        ) {
+          return (
+            <button
+              onClick={() => updateProjectStatus("in-progress")}
+              className="btn-success"
+            >
+              <AlertCircle className="h-4 w-4 mr-2" />
+              Start Development
+            </button>
+          );
+        }
+        return null;
       case "in-progress":
         return (
           <button
@@ -343,7 +350,10 @@ const AdminProjectDetail = () => {
         </div>
         <div className="flex items-center space-x-3">
           {getStatusBadge(project.status)}
-          <Link to={`/admin/chat/${project.id}`} className="btn-primary">
+          <Link
+            to={`/admin/chat/${project.id}`}
+            className="btn-outline btn-sm w-full flex items-center justify-center"
+          >
             <MessageSquare className="h-4 w-4 mr-2" />
             Chat with Client
           </Link>
@@ -613,207 +623,16 @@ const AdminProjectDetail = () => {
               <div className="space-y-2">
                 <Link
                   to={`/admin/chat/${project.id}`}
-                  className="w-full btn-outline btn-sm"
+                  className="btn-outline btn-sm w-full flex items-center justify-center"
                 >
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Chat with Client
                 </Link>
-
-                {project.status === "pending" && (
-                  <button
-                    onClick={() => setShowPricingModal(true)}
-                    className="w-full btn-primary btn-sm"
-                  >
-                    <Edit className="h-4 w-4 mr-2" />
-                    Set Price
-                  </button>
-                )}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Pricing Modal */}
-      {showPricingModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                Set Project Price
-              </h3>
-              <form onSubmit={handlePricingSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Project Title
-                  </label>
-                  <p className="text-sm text-gray-900 mt-1">{project.title}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Delivery Speed
-                  </label>
-                  <p className="text-sm text-gray-900 mt-1">
-                    {(() => {
-                      if (project.deliverySpeed === "1_day")
-                        return "1 Day Delivery (+₹100)";
-                      if (project.deliverySpeed === "3_days")
-                        return "3 Day Delivery (+₹50)";
-                      return "1 Week Delivery (Free)";
-                    })()}
-                  </p>
-                </div>
-                <div>
-                  <label
-                    htmlFor="price"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Amount (₹)
-                  </label>
-                  <input
-                    type="number"
-                    id="price"
-                    value={pricingData.price}
-                    onChange={(e) =>
-                      setPricingData({ ...pricingData, price: e.target.value })
-                    }
-                    className="input mt-1"
-                    placeholder="Enter project amount"
-                    min="0"
-                    step="100"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Final Amount (Base + Extra)
-                  </label>
-                  <p className="text-sm text-gray-900 mt-1">
-                    ₹
-                    {(
-                      (parseFloat(pricingData.price) || 0) +
-                      (project.deliveryExtra || 0)
-                    ).toLocaleString()}
-                  </p>
-                </div>
-                <div>
-                  <label
-                    htmlFor="notes"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Admin Notes (Optional)
-                  </label>
-                  <textarea
-                    id="notes"
-                    value={pricingData.notes}
-                    onChange={(e) =>
-                      setPricingData({ ...pricingData, notes: e.target.value })
-                    }
-                    className="input mt-1"
-                    rows="3"
-                    placeholder="Any notes for the client..."
-                  />
-                </div>
-                <div className="flex justify-end space-x-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowPricingModal(false);
-                      setPricingData({ price: "", notes: "" });
-                    }}
-                    className="btn-outline"
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn-primary">
-                    Approve & Price
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Delivery Modal */}
-      {showDeliveryModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                Deliver Project
-              </h3>
-              <form onSubmit={handleDeliverySubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Project Title
-                  </label>
-                  <p className="text-sm text-gray-900 mt-1">{project.title}</p>
-                </div>
-                <div>
-                  <label
-                    htmlFor="projectLink"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Project Link *
-                  </label>
-                  <input
-                    type="url"
-                    id="projectLink"
-                    value={deliveryData.projectLink}
-                    onChange={(e) =>
-                      setDeliveryData({
-                        ...deliveryData,
-                        projectLink: e.target.value,
-                      })
-                    }
-                    className="input mt-1"
-                    placeholder="https://drive.google.com/... or any project link"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="deliveryNotes"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Delivery Notes (Optional)
-                  </label>
-                  <textarea
-                    id="deliveryNotes"
-                    value={deliveryData.notes}
-                    onChange={(e) =>
-                      setDeliveryData({
-                        ...deliveryData,
-                        notes: e.target.value,
-                      })
-                    }
-                    className="input mt-1"
-                    rows="3"
-                    placeholder="Any additional notes for the client..."
-                  />
-                </div>
-                <div className="flex justify-end space-x-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowDeliveryModal(false);
-                      setDeliveryData({ projectLink: "", notes: "" });
-                    }}
-                    className="btn-outline"
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn-success">
-                    <Download className="h-4 w-4 mr-2" />
-                    Deliver Project
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

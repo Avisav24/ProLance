@@ -633,6 +633,74 @@ const AdminProjectDetail = () => {
           </div>
         </div>
       </div>
+      {showDeliveryModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Deliver Project
+              </h3>
+              <form onSubmit={handleDeliverySubmit} className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="projectLink"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Project Link
+                  </label>
+                  <input
+                    type="url"
+                    id="projectLink"
+                    value={deliveryData.projectLink}
+                    onChange={(e) =>
+                      setDeliveryData({
+                        ...deliveryData,
+                        projectLink: e.target.value,
+                      })
+                    }
+                    className="input mt-1"
+                    placeholder="Enter project delivery link (Google Drive, GitHub, etc.)"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="notes"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Notes (Optional)
+                  </label>
+                  <textarea
+                    id="notes"
+                    value={deliveryData.notes}
+                    onChange={(e) =>
+                      setDeliveryData({
+                        ...deliveryData,
+                        notes: e.target.value,
+                      })
+                    }
+                    className="input mt-1"
+                    rows="3"
+                    placeholder="Any notes for the client..."
+                  />
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowDeliveryModal(false)}
+                    className="btn-outline"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn-primary">
+                    Deliver
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

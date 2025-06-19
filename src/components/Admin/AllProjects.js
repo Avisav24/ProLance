@@ -465,7 +465,7 @@ const AllProjects = () => {
                     className="input mt-1"
                     placeholder="Enter project amount"
                     min="0"
-                    step="100"
+                    step="any"
                     required
                   />
                 </div>

@@ -378,14 +378,6 @@ const AdminProjectDetail = () => {
                       )}
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Budget Range
-                    </label>
-                    <p className="mt-1 text-sm text-gray-900">
-                      ₹{project.budget?.toLocaleString() || "Not specified"}
-                    </p>
-                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

@@ -485,31 +485,6 @@ const ProjectDetail = () => {
               </div>
             </div>
           </div>
-
-          {/* Budget Info */}
-          <div className="card">
-            <div className="card-header">
-              <h3 className="text-lg font-medium text-gray-900">Budget</h3>
-            </div>
-            <div className="card-body space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-500">
-                  Your Budget
-                </label>
-                <p className="text-lg font-semibold text-gray-900">
-                  ₹{project.budget?.toLocaleString() || "0"}
-                </p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-500">
-                  Project Amount
-                </label>
-                <p className="text-lg font-semibold text-gray-900">
-                  ₹{project.totalAmount?.toLocaleString() || "0"}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

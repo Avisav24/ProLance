@@ -277,16 +277,33 @@ const MyProjects = () => {
                         <div className="mt-3 flex flex-wrap gap-4 text-sm text-gray-600">
                           <div className="flex items-center">
                             <Clock className="h-4 w-4 mr-1" />
-                            Deadline:{" "}
-                            {project.deadline
-                              ? new Date(
-                                  project.deadline.toDate()
-                                ).toLocaleDateString()
-                              : "Not specified"}
+                            Delivery Speed:{" "}
+                            {(() => {
+                              if (project.deliverySpeed === "1_day")
+                                return "1 Day Delivery (+₹100)";
+                              if (project.deliverySpeed === "3_days")
+                                return "3 Day Delivery (+₹50)";
+                              return "1 Week Delivery (Free)";
+                            })()}
                           </div>
-                          <div className="flex items-center">
-                            Amount: ₹
-                            {project.totalAmount?.toLocaleString() || "0"}
+                          <div className="flex flex-col">
+                            <span>
+                              Base Price: ₹
+                              {project.totalAmount?.toLocaleString() || "0"}
+                            </span>
+                            <span>
+                              Delivery Extra: ₹
+                              {project.deliveryExtra
+                                ? project.deliveryExtra
+                                : 0}
+                            </span>
+                            <span className="font-semibold">
+                              Final Amount: ₹
+                              {(
+                                (project.totalAmount || 0) +
+                                (project.deliveryExtra || 0)
+                              ).toLocaleString()}
+                            </span>
                           </div>
                           <div className="flex items-center">
                             Created:{" "}

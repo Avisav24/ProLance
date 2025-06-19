@@ -391,16 +391,43 @@ const AdminProjectDetail = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Deadline
+                      Delivery Speed
                     </label>
                     <p className="mt-1 text-sm text-gray-900">
-                      {project.deadline
-                        ? new Date(
-                            project.deadline.toDate()
-                          ).toLocaleDateString()
-                        : "Not specified"}
+                      {(() => {
+                        if (project.deliverySpeed === "1_day")
+                          return "1 Day Delivery (+₹100)";
+                        if (project.deliverySpeed === "3_days")
+                          return "3 Day Delivery (+₹50)";
+                        return "1 Week Delivery (Free)";
+                      })()}
                     </p>
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Payment Breakdown
+                    </label>
+                    <div className="mt-1 text-sm text-gray-900">
+                      <div>
+                        Base Price: ₹
+                        {project.totalAmount?.toLocaleString() || "0"}
+                      </div>
+                      <div>
+                        Delivery Extra: ₹
+                        {project.deliveryExtra ? project.deliveryExtra : 0}
+                      </div>
+                      <div className="font-semibold">
+                        Final Amount: ₹
+                        {(
+                          (project.totalAmount || 0) +
+                          (project.deliveryExtra || 0)
+                        ).toLocaleString()}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Created Date
@@ -501,11 +528,25 @@ const AdminProjectDetail = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-xs font-medium text-gray-500">
-                    Project Amount
+                    Payment Breakdown
                   </label>
-                  <p className="text-lg font-semibold text-gray-900">
-                    ₹{project.totalAmount?.toLocaleString() || "Not set"}
-                  </p>
+                  <div className="text-sm text-gray-900">
+                    <div>
+                      Base Price: ₹
+                      {project.totalAmount?.toLocaleString() || "0"}
+                    </div>
+                    <div>
+                      Delivery Extra: ₹
+                      {project.deliveryExtra ? project.deliveryExtra : 0}
+                    </div>
+                    <div className="font-semibold">
+                      Final Amount: ₹
+                      {(
+                        (project.totalAmount || 0) +
+                        (project.deliveryExtra || 0)
+                      ).toLocaleString()}
+                    </div>
+                  </div>
                 </div>
 
                 <div>
@@ -579,6 +620,20 @@ const AdminProjectDetail = () => {
                   <p className="text-sm text-gray-900 mt-1">{project.title}</p>
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Delivery Speed
+                  </label>
+                  <p className="text-sm text-gray-900 mt-1">
+                    {(() => {
+                      if (project.deliverySpeed === "1_day")
+                        return "1 Day Delivery (+₹100)";
+                      if (project.deliverySpeed === "3_days")
+                        return "3 Day Delivery (+₹50)";
+                      return "1 Week Delivery (Free)";
+                    })()}
+                  </p>
+                </div>
+                <div>
                   <label
                     htmlFor="price"
                     className="block text-sm font-medium text-gray-700"
@@ -598,6 +653,18 @@ const AdminProjectDetail = () => {
                     step="100"
                     required
                   />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Final Amount (Base + Extra)
+                  </label>
+                  <p className="text-sm text-gray-900 mt-1">
+                    ₹
+                    {(
+                      (parseFloat(pricingData.price) || 0) +
+                      (project.deliveryExtra || 0)
+                    ).toLocaleString()}
+                  </p>
                 </div>
                 <div>
                   <label

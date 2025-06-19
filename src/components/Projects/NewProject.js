@@ -15,10 +15,17 @@ const NewProject = () => {
     description: "",
     requirements: "",
     categories: [],
-    deadline: "",
+    deliverySpeed: "1_week",
+    deliveryExtra: 0,
   });
 
   const categories = ["Project", "Report", "Assignment", "PPT"];
+
+  const deliveryOptions = [
+    { label: "1 Day Delivery (+₹100)", value: "1_day", extra: 100 },
+    { label: "3 Day Delivery (+₹50)", value: "3_days", extra: 50 },
+    { label: "1 Week Delivery (Free)", value: "1_week", extra: 0 },
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,6 +41,14 @@ const NewProject = () => {
       categories: prev.categories.includes(category)
         ? prev.categories.filter((cat) => cat !== category)
         : [...prev.categories, category],
+    }));
+  };
+
+  const handleDeliverySpeedChange = (value, extra) => {
+    setFormData((prev) => ({
+      ...prev,
+      deliverySpeed: value,
+      deliveryExtra: extra,
     }));
   };
 
@@ -62,7 +77,8 @@ const NewProject = () => {
         requirements: formData.requirements,
         categories: formData.categories,
         category: formData.categories.join(", "), // Keep for backward compatibility
-        deadline: formData.deadline ? new Date(formData.deadline) : null,
+        deliverySpeed: formData.deliverySpeed,
+        deliveryExtra: formData.deliveryExtra,
         status: "pending",
         price: 0,
         paymentStatus: "pending",
@@ -194,23 +210,34 @@ const NewProject = () => {
               />
             </div>
 
-            {/* Deadline */}
+            {/* Delivery Speed */}
             <div>
-              <label
-                htmlFor="deadline"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Deadline
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Delivery Speed *
               </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                value={formData.deadline}
-                onChange={handleChange}
-                className="input mt-1"
-                min={new Date().toISOString().split("T")[0]}
-              />
+              <div className="flex flex-col sm:flex-row gap-3">
+                {deliveryOptions.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
+                      formData.deliverySpeed === option.value
+                        ? "border-primary-500 bg-primary-50 text-primary-700"
+                        : "border-gray-300 hover:border-gray-400"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="deliverySpeed"
+                      checked={formData.deliverySpeed === option.value}
+                      onChange={() =>
+                        handleDeliverySpeedChange(option.value, option.extra)
+                      }
+                      className="sr-only"
+                    />
+                    <span className="text-sm font-medium">{option.label}</span>
+                  </label>
+                ))}
+              </div>
             </div>
 
             {/* Submit Button */}

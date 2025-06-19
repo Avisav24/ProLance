@@ -301,13 +301,26 @@ const ProjectDetail = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700">
-                        Project Amount
+                        Payment Breakdown
                       </label>
-                      <p className="text-2xl font-bold text-gray-900">
-                        ₹{project.totalAmount?.toLocaleString() || "0"}
-                      </p>
+                      <div className="text-base text-gray-900">
+                        <div>
+                          Base Price: ₹
+                          {project.totalAmount?.toLocaleString() || "0"}
+                        </div>
+                        <div>
+                          Delivery Extra: ₹
+                          {project.deliveryExtra ? project.deliveryExtra : 0}
+                        </div>
+                        <div className="font-semibold">
+                          Final Amount: ₹
+                          {(
+                            (project.totalAmount || 0) +
+                            (project.deliveryExtra || 0)
+                          ).toLocaleString()}
+                        </div>
+                      </div>
                     </div>
-
                     <form onSubmit={handlePaymentSubmit} className="space-y-4">
                       <div>
                         <label
@@ -445,46 +458,6 @@ const ProjectDetail = () => {
               </div>
             </div>
           )}
-        </div>
-
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Project Info */}
-          <div className="card">
-            <div className="card-header">
-              <h3 className="text-lg font-medium text-gray-900">
-                Project Info
-              </h3>
-            </div>
-            <div className="card-body space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-500">
-                  Project ID
-                </label>
-                <p className="text-sm text-gray-900">{project.id}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-500">
-                  Created
-                </label>
-                <p className="text-sm text-gray-900">
-                  {project.createdAt
-                    ? new Date(project.createdAt.toDate()).toLocaleDateString()
-                    : "N/A"}
-                </p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-500">
-                  Last Updated
-                </label>
-                <p className="text-sm text-gray-900">
-                  {project.updatedAt
-                    ? new Date(project.updatedAt.toDate()).toLocaleDateString()
-                    : "N/A"}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

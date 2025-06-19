@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNotifications } from "../../contexts/NotificationContext";
 import {
@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 
 const AdminProjectDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const { currentUser, userProfile } = useAuth();
   const { createNotification } = useNotifications();
   const navigate = useNavigate();
@@ -43,6 +44,9 @@ const AdminProjectDetail = () => {
 
   useEffect(() => {
     fetchProject();
+    if (location.state && location.state.openDeliveryModal) {
+      setShowDeliveryModal(true);
+    }
   }, [id]);
 
   const fetchProject = async () => {
@@ -71,10 +75,14 @@ const AdminProjectDetail = () => {
   const updateProjectStatus = async (newStatus) => {
     try {
       const projectRef = doc(db, "projects", id);
-      await updateDoc(projectRef, {
+      const updateData = {
         status: newStatus,
         updatedAt: serverTimestamp(),
-      });
+      };
+      if (newStatus === "in-progress") {
+        updateData.paymentStatus = "done";
+      }
+      await updateDoc(projectRef, updateData);
 
       // Send notification to client
       await createNotification(

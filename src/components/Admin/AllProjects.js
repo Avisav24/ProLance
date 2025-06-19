@@ -360,14 +360,15 @@ const AllProjects = () => {
                             </button>
                           )}
                           {project.status === "completed" && (
-                            <button
-                              onClick={() =>
-                                updateProjectStatus(project.id, "delivered")
-                              }
+                            <Link
+                              to={{
+                                pathname: `/admin/project/${project.id}`,
+                                state: { openDeliveryModal: true },
+                              }}
                               className="btn-success btn-sm"
                             >
                               Deliver
-                            </button>
+                            </Link>
                           )}
                         </div>
                       </td>

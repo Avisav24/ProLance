@@ -330,26 +330,45 @@ const MyProjects = () => {
                   </div>
                 </div>
 
-                {/* Payment Status */}
+                {/* Payment Status or Delivery Link */}
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
-                      Payment: {project.paymentStatus || "pending"}
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {project.paymentStatus === "pending" &&
-                        project.status === "approved" && (
-                          <span className="text-warning-600 font-medium">
-                            Payment Required
-                          </span>
-                        )}
-                      {project.paymentStatus === "paid" && (
-                        <span className="text-success-600 font-medium">
-                          Payment Confirmed
+                  {project.status === "delivered" && project.projectLink ? (
+                    <div className="flex items-center space-x-3">
+                      <a
+                        href={project.projectLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
+                      >
+                        {/* You can use a download or link icon here if available */}
+                        Access Your Project
+                      </a>
+                      {project.deliveryNotes && (
+                        <span className="ml-2 text-xs text-gray-500">
+                          {project.deliveryNotes}
                         </span>
                       )}
                     </div>
-                  </div>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm text-gray-600">
+                        Payment: {project.paymentStatus || "pending"}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        {project.paymentStatus === "pending" &&
+                          project.status === "approved" && (
+                            <span className="text-warning-600 font-medium">
+                              Payment Required
+                            </span>
+                          )}
+                        {project.paymentStatus === "paid" && (
+                          <span className="text-success-600 font-medium">
+                            Payment Confirmed
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

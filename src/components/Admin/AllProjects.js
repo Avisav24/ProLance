@@ -35,6 +35,7 @@ const AllProjects = () => {
     price: "",
     notes: "",
   });
+  const [deliveryTimeFilter, setDeliveryTimeFilter] = useState("all");
   const { createNotification } = useNotifications();
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const AllProjects = () => {
 
   useEffect(() => {
     filterProjects();
-  }, [projects, searchTerm, statusFilter]);
+  }, [projects, searchTerm, statusFilter, deliveryTimeFilter]);
 
   const fetchProjects = async () => {
     try {
@@ -89,6 +90,13 @@ const AllProjects = () => {
     // Status filter
     if (statusFilter !== "all") {
       filtered = filtered.filter((project) => project.status === statusFilter);
+    }
+
+    // Delivery time filter
+    if (deliveryTimeFilter !== "all") {
+      filtered = filtered.filter(
+        (project) => project.deliverySpeed === deliveryTimeFilter
+      );
     }
 
     setFilteredProjects(filtered);
@@ -177,6 +185,12 @@ const AllProjects = () => {
     );
   };
 
+  const clearAllFilters = () => {
+    setSearchTerm("");
+    setStatusFilter("all");
+    setDeliveryTimeFilter("all");
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -200,7 +214,7 @@ const AllProjects = () => {
       {/* Filters */}
       <div className="card">
         <div className="card-body">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -226,6 +240,26 @@ const AllProjects = () => {
                 <option value="rejected">Rejected</option>
                 <option value="cancelled">Cancelled</option>
               </select>
+            </div>
+            <div>
+              <select
+                value={deliveryTimeFilter}
+                onChange={(e) => setDeliveryTimeFilter(e.target.value)}
+                className="input"
+              >
+                <option value="all">All Delivery Times</option>
+                <option value="1_day">1 Day Delivery</option>
+                <option value="3_days">3 Day Delivery</option>
+                <option value="1_week">1 Week Delivery</option>
+              </select>
+            </div>
+            <div>
+              <button
+                onClick={clearAllFilters}
+                className="input bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors duration-200 w-full"
+              >
+                Clear Filters
+              </button>
             </div>
             <div className="text-sm text-gray-500 flex items-center">
               <Filter className="h-4 w-4 mr-1" />

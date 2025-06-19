@@ -81,6 +81,7 @@ const AdminProjectDetail = () => {
       };
       if (newStatus === "in-progress") {
         updateData.paymentStatus = "done";
+        updateData.startedAt = serverTimestamp();
       }
       await updateDoc(projectRef, updateData);
 
@@ -191,6 +192,30 @@ const AdminProjectDetail = () => {
     }
   };
 
+  const handleRejectProject = async () => {
+    if (!window.confirm("Are you sure you want to reject this project?"))
+      return;
+    try {
+      const projectRef = doc(db, "projects", id);
+      await updateDoc(projectRef, {
+        status: "rejected",
+        updatedAt: serverTimestamp(),
+      });
+      await createNotification(
+        project.clientId,
+        "Project Rejected",
+        `Your project "${project.title}" has been rejected by the admin. Please contact support for more information.`,
+        "error",
+        project.id
+      );
+      toast.success("Project rejected successfully");
+      fetchProject();
+    } catch (error) {
+      console.error("Error rejecting project:", error);
+      toast.error("Failed to reject project");
+    }
+  };
+
   const getStatusIcon = (status) => {
     switch (status) {
       case "pending":
@@ -230,13 +255,18 @@ const AdminProjectDetail = () => {
     switch (project.status) {
       case "pending":
         return (
-          <button
-            onClick={() => setShowPricingModal(true)}
-            className="btn-primary"
-          >
-            <Edit className="h-4 w-4 mr-2" />
-            Set Price & Approve
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowPricingModal(true)}
+              className="btn-primary"
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Set Price & Approve
+            </button>
+            <button onClick={handleRejectProject} className="btn-danger">
+              Reject Project
+            </button>
+          </div>
         );
       case "approved":
         return (

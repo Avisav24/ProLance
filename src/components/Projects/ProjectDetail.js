@@ -17,6 +17,18 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import toast from "react-hot-toast";
 
+// Helper to get delivery duration in ms
+const getDeliveryDurationMs = (deliverySpeed) => {
+  switch (deliverySpeed) {
+    case "1_day":
+      return 24 * 60 * 60 * 1000;
+    case "3_days":
+      return 3 * 24 * 60 * 60 * 1000;
+    default:
+      return 7 * 24 * 60 * 60 * 1000;
+  }
+};
+
 const ProjectDetail = () => {
   const { id } = useParams();
   const { currentUser, userProfile } = useAuth();
@@ -144,6 +156,16 @@ const ProjectDetail = () => {
     } else {
       return "/my-projects";
     }
+  };
+
+  // Calculate deadline as createdAt + delivery duration
+  const getDeadlineDate = () => {
+    if (!project || !project.createdAt || !project.deliverySpeed) return null;
+    const created = project.createdAt.toDate
+      ? project.createdAt.toDate()
+      : new Date(project.createdAt);
+    const duration = getDeliveryDurationMs(project.deliverySpeed);
+    return new Date(created.getTime() + duration);
   };
 
   if (loading) {
@@ -276,10 +298,8 @@ const ProjectDetail = () => {
                       Deadline
                     </label>
                     <p className="text-sm text-gray-900 mt-1">
-                      {project.deadline
-                        ? new Date(
-                            project.deadline.toDate()
-                          ).toLocaleDateString()
+                      {getDeadlineDate()
+                        ? getDeadlineDate().toLocaleDateString()
                         : "Not specified"}
                     </p>
                   </div>
@@ -288,9 +308,16 @@ const ProjectDetail = () => {
             </div>
           </div>
 
-          {/* Payment Section */}
-          {project.status === "approved" &&
-            project.paymentStatus === "pending" && (
+          {/* Payment Breakdown (show for all except pending/rejected) */}
+          {[
+            "approved",
+            "in-progress",
+            "completed",
+            "delivered",
+            "paid",
+            "done",
+          ].includes(project.status) &&
+            project.status !== "rejected" && (
               <div className="card">
                 <div className="card-header">
                   <h3 className="text-lg font-medium text-gray-900">
@@ -321,29 +348,42 @@ const ProjectDetail = () => {
                         </div>
                       </div>
                     </div>
-                    <form onSubmit={handlePaymentSubmit} className="space-y-4">
-                      <div>
-                        <label
-                          htmlFor="paymentProof"
-                          className="block text-sm font-medium text-gray-700"
-                        >
-                          Payment Proof Details
-                        </label>
-                        <textarea
-                          id="paymentProof"
-                          value={paymentProof}
-                          onChange={(e) => setPaymentProof(e.target.value)}
-                          className="input mt-1"
-                          rows="4"
-                          placeholder="Enter payment transaction details, reference number, or any proof of payment..."
-                          required
-                        />
-                      </div>
-                      <button type="submit" className="btn-primary">
-                        Submit Payment Proof
-                      </button>
-                    </form>
                   </div>
+                </div>
+              </div>
+            )}
+          {/* Payment Section (only for payment proof submission) */}
+          {project.status === "approved" &&
+            project.paymentStatus === "pending" && (
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="text-lg font-medium text-gray-900">
+                    Payment Submission
+                  </h3>
+                </div>
+                <div className="card-body">
+                  <form onSubmit={handlePaymentSubmit} className="space-y-4">
+                    <div>
+                      <label
+                        htmlFor="paymentProof"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Payment Proof Details
+                      </label>
+                      <textarea
+                        id="paymentProof"
+                        value={paymentProof}
+                        onChange={(e) => setPaymentProof(e.target.value)}
+                        className="input mt-1"
+                        rows="4"
+                        placeholder="Enter payment transaction details, reference number, or any proof of payment..."
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="btn-primary">
+                      Submit Payment Proof
+                    </button>
+                  </form>
                 </div>
               </div>
             )}
@@ -366,6 +406,30 @@ const ProjectDetail = () => {
                     <p className="text-sm text-gray-500">
                       We are verifying your payment. You will be notified once
                       confirmed.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {project.paymentStatus === "done" && (
+            <div className="card">
+              <div className="card-header">
+                <h3 className="text-lg font-medium text-gray-900">
+                  Payment Status
+                </h3>
+              </div>
+              <div className="card-body">
+                <div className="flex items-center space-x-3">
+                  <CheckCircle className="h-6 w-6 text-success-500" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">
+                      Payment Done
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Your payment has been verified and work has started on
+                      your project.
                     </p>
                   </div>
                 </div>

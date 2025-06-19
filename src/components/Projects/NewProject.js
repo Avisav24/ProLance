@@ -98,165 +98,214 @@ const NewProject = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Submit New Project</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Fill out the form below to submit your project requirements
-        </p>
-      </div>
+    <div
+      className="min-h-screen"
+      style={{
+        background:
+          "linear-gradient(to bottom right, #f8f6f8, #ffe4e9, #c8e5ff)",
+      }}
+    >
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Header */}
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+              Submit New Project
+            </h1>
+            <p className="mt-2 text-sm sm:text-base text-gray-600">
+              Fill out the form below to submit your project requirements
+            </p>
+          </div>
 
-      {/* Form */}
-      <div className="card">
-        <div className="card-body">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Project Title */}
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Project Title *
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="input mt-1"
-                placeholder="Enter project title"
-                required
-              />
-            </div>
-
-            {/* Categories */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Project Categories *
-              </label>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {categories.map((category) => (
+          {/* Form */}
+          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div className="px-6 py-8 sm:p-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Project Title */}
+                <div>
                   <label
-                    key={category}
-                    className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                      formData.categories.includes(category)
-                        ? "border-primary-500 bg-primary-50 text-primary-700"
-                        : "border-gray-300 hover:border-gray-400"
-                    }`}
+                    htmlFor="title"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    <input
-                      type="checkbox"
-                      checked={formData.categories.includes(category)}
-                      onChange={() => handleCategoryChange(category)}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center space-x-2">
-                      {formData.categories.includes(category) ? (
-                        <Check className="h-4 w-4 text-primary-600" />
-                      ) : (
-                        <div className="h-4 w-4 border-2 border-gray-300 rounded"></div>
-                      )}
-                      <span className="text-sm font-medium">{category}</span>
-                    </div>
+                    Project Title *
                   </label>
-                ))}
-              </div>
-              {formData.categories.length > 0 && (
-                <p className="mt-2 text-sm text-gray-500">
-                  Selected: {formData.categories.join(", ")}
-                </p>
-              )}
-            </div>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Enter project title"
+                    required
+                  />
+                </div>
 
-            {/* Description */}
-            <div>
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Project Description *
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows="4"
-                className="input mt-1"
-                placeholder="Describe your project in detail"
-                required
-              />
-            </div>
+                {/* Categories */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Project Categories *
+                  </label>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {categories.map((category) => (
+                      <label
+                        key={category}
+                        className={`flex items-center p-3 border-2 rounded-xl cursor-pointer transition-all duration-200 ${
+                          formData.categories.includes(category)
+                            ? "border-blue-500 bg-blue-50"
+                            : "border-gray-200 hover:border-gray-300 bg-white"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.categories.includes(category)}
+                          onChange={() => handleCategoryChange(category)}
+                          className="sr-only"
+                        />
+                        <div className="flex items-center space-x-2">
+                          {formData.categories.includes(category) ? (
+                            <Check className="h-4 w-4 text-blue-600" />
+                          ) : (
+                            <div className="h-4 w-4 border-2 border-gray-300 rounded"></div>
+                          )}
+                          <span
+                            className={`text-sm font-medium ${
+                              formData.categories.includes(category)
+                                ? "text-blue-700"
+                                : "text-gray-700"
+                            }`}
+                          >
+                            {category}
+                          </span>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                  {formData.categories.length > 0 && (
+                    <p className="mt-2 text-sm text-gray-500">
+                      Selected: {formData.categories.join(", ")}
+                    </p>
+                  )}
+                </div>
 
-            {/* Requirements */}
-            <div>
-              <label
-                htmlFor="requirements"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Technical Requirements *
-              </label>
-              <textarea
-                id="requirements"
-                name="requirements"
-                value={formData.requirements}
-                onChange={handleChange}
-                rows="6"
-                className="input mt-1"
-                placeholder="List all technical requirements, features, and specifications"
-                required
-              />
-            </div>
-
-            {/* Delivery Speed */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Delivery Speed *
-              </label>
-              <div className="flex flex-col sm:flex-row gap-3">
-                {deliveryOptions.map((option) => (
+                {/* Description */}
+                <div>
                   <label
-                    key={option.value}
-                    className={`flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${
-                      formData.deliverySpeed === option.value
-                        ? "border-primary-500 bg-primary-50 text-primary-700"
-                        : "border-gray-300 hover:border-gray-400"
-                    }`}
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    <input
-                      type="radio"
-                      name="deliverySpeed"
-                      checked={formData.deliverySpeed === option.value}
-                      onChange={() =>
-                        handleDeliverySpeedChange(option.value, option.extra)
-                      }
-                      className="sr-only"
-                    />
-                    <span className="text-sm font-medium">{option.label}</span>
+                    Project Description *
                   </label>
-                ))}
-              </div>
-            </div>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows="4"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                    placeholder="Describe your project in detail"
+                    required
+                  />
+                </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-end">
-              <button type="submit" disabled={loading} className="btn-primary">
-                {loading ? (
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Submitting...
+                {/* Requirements */}
+                <div>
+                  <label
+                    htmlFor="requirements"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Technical Requirements *
+                  </label>
+                  <textarea
+                    id="requirements"
+                    name="requirements"
+                    value={formData.requirements}
+                    onChange={handleChange}
+                    rows="6"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                    placeholder="List all technical requirements, features, and specifications"
+                    required
+                  />
+                </div>
+
+                {/* Delivery Speed */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Delivery Speed *
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {deliveryOptions.map((option) => (
+                      <label
+                        key={option.value}
+                        className={`flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 ${
+                          formData.deliverySpeed === option.value
+                            ? "border-blue-500 bg-blue-50"
+                            : "border-gray-200 hover:border-gray-300 bg-white"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="deliverySpeed"
+                          checked={formData.deliverySpeed === option.value}
+                          onChange={() =>
+                            handleDeliverySpeedChange(
+                              option.value,
+                              option.extra
+                            )
+                          }
+                          className="sr-only"
+                        />
+                        <span
+                          className={`text-sm font-medium ${
+                            formData.deliverySpeed === option.value
+                              ? "text-blue-700"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          {option.label}
+                        </span>
+                      </label>
+                    ))}
                   </div>
-                ) : (
-                  <div className="flex items-center">
-                    <Send className="h-4 w-4 mr-2" />
-                    Submit Project
-                  </div>
-                )}
-              </button>
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    className="w-full sm:w-auto px-6 py-3 border-2 rounded-xl font-medium transition-all duration-200 bg-white"
+                    style={{ borderColor: "#03A6A1", color: "#03A6A1" }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = "#E6F7F6";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = "white";
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full sm:w-auto flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Submitting...
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <Send className="h-4 w-4 mr-2" />
+                        Submit Project
+                      </div>
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

@@ -60,7 +60,9 @@ const ClientDashboard = () => {
       // Calculate stats from all projects
       const statsData = {
         total: projectsData.length,
-        pending: projectsData.filter((p) => p.status === "pending").length,
+        pending: projectsData.filter((p) =>
+          ["pending", "approved", "in-progress", "completed"].includes(p.status)
+        ).length,
         inProgress: projectsData.filter((p) => p.status === "in-progress")
           .length,
         completed: projectsData.filter(

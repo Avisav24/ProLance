@@ -445,30 +445,6 @@ const ProjectDetail = () => {
               </div>
             </div>
           )}
-
-          {/* Project Rejected */}
-          {project.status === "rejected" && (
-            <div className="card border border-danger-200 bg-danger-50">
-              <div className="card-header">
-                <h3 className="text-lg font-medium text-danger-700">
-                  Project Rejected
-                </h3>
-              </div>
-              <div className="card-body">
-                <div className="flex items-center space-x-3">
-                  <AlertCircle className="h-6 w-6 text-danger-500" />
-                  <div>
-                    <p className="text-sm font-medium text-danger-700">
-                      Unfortunately, your project was rejected by the admin.
-                    </p>
-                    <p className="text-sm text-danger-600">
-                      Reason: {project.rejectReason || "No reason provided."}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Sidebar */}
@@ -505,6 +481,31 @@ const ProjectDetail = () => {
                   {project.updatedAt
                     ? new Date(project.updatedAt.toDate()).toLocaleDateString()
                     : "N/A"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Budget Info */}
+          <div className="card">
+            <div className="card-header">
+              <h3 className="text-lg font-medium text-gray-900">Budget</h3>
+            </div>
+            <div className="card-body space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-500">
+                  Your Budget
+                </label>
+                <p className="text-lg font-semibold text-gray-900">
+                  ₹{project.budget?.toLocaleString() || "0"}
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-500">
+                  Project Amount
+                </label>
+                <p className="text-lg font-semibold text-gray-900">
+                  ₹{project.totalAmount?.toLocaleString() || "0"}
                 </p>
               </div>
             </div>

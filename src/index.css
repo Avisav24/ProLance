@@ -26,7 +26,7 @@
   }
   
   .btn-success {
-    @apply btn bg-success-600 text-white hover:bg-success-700 focus:ring-success-500;
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
   }
   
   .btn-warning {
@@ -66,7 +66,7 @@
   }
   
   .status-approved {
-    @apply status-badge bg-success-100 text-success-800;
+    @apply status-badge bg-primary-100 text-primary-800;
   }
   
   .status-rejected {
@@ -78,11 +78,11 @@
   }
   
   .status-completed {
-    @apply status-badge bg-success-100 text-success-800;
+    @apply status-badge bg-primary-100 text-primary-800;
   }
   
   .status-delivered {
-    @apply status-badge bg-success-100 text-success-800;
+    @apply status-badge bg-primary-100 text-primary-800;
   }
   
   .status-cancelled {

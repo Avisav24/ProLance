@@ -285,6 +285,9 @@ const MyProjects = () => {
                               : "Not specified"}
                           </div>
                           <div className="flex items-center">
+                            Budget: ₹{project.budget?.toLocaleString() || "0"}
+                          </div>
+                          <div className="flex items-center">
                             Amount: ₹
                             {project.totalAmount?.toLocaleString() || "0"}
                           </div>

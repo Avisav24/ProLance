@@ -16,7 +16,6 @@ const NewProject = () => {
     requirements: "",
     categories: [],
     deadline: "",
-    budget: "",
   });
 
   const categories = ["Project", "Report", "Assignment", "PPT"];
@@ -64,7 +63,6 @@ const NewProject = () => {
         categories: formData.categories,
         category: formData.categories.join(", "), // Keep for backward compatibility
         deadline: formData.deadline ? new Date(formData.deadline) : null,
-        budget: parseFloat(formData.budget) || 0,
         status: "pending",
         price: 0,
         paymentStatus: "pending",
@@ -196,44 +194,23 @@ const NewProject = () => {
               />
             </div>
 
-            {/* Deadline and Budget */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="deadline"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Deadline
-                </label>
-                <input
-                  type="date"
-                  id="deadline"
-                  name="deadline"
-                  value={formData.deadline}
-                  onChange={handleChange}
-                  className="input mt-1"
-                  min={new Date().toISOString().split("T")[0]}
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="budget"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Budget (₹)
-                </label>
-                <input
-                  type="number"
-                  id="budget"
-                  name="budget"
-                  value={formData.budget}
-                  onChange={handleChange}
-                  className="input mt-1"
-                  placeholder="Enter your budget in rupees"
-                  min="0"
-                />
-              </div>
+            {/* Deadline */}
+            <div>
+              <label
+                htmlFor="deadline"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Deadline
+              </label>
+              <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={formData.deadline}
+                onChange={handleChange}
+                className="input mt-1"
+                min={new Date().toISOString().split("T")[0]}
+              />
             </div>
 
             {/* Submit Button */}

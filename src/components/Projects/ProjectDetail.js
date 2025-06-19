@@ -11,6 +11,7 @@ import {
   FileText,
   Calendar,
   User,
+  Download,
 } from "lucide-react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
@@ -383,6 +384,91 @@ const ProjectDetail = () => {
               </div>
             </div>
           )}
+
+          {/* Project Delivery */}
+          {project.status === "delivered" && project.projectLink && (
+            <div className="card">
+              <div className="card-header">
+                <h3 className="text-lg font-medium text-gray-900">
+                  Project Delivered! 🎉
+                </h3>
+              </div>
+              <div className="card-body">
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-6 w-6 text-success-500" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">
+                        Your project has been delivered successfully!
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Click the link below to access your completed project.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Project Link
+                    </label>
+                    <a
+                      href={project.projectLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Access Your Project
+                    </a>
+                  </div>
+
+                  {project.deliveryNotes && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Delivery Notes
+                      </label>
+                      <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">
+                        {project.deliveryNotes}
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="text-xs text-gray-500">
+                    Delivered on:{" "}
+                    {project.deliveredAt
+                      ? new Date(
+                          project.deliveredAt.toDate()
+                        ).toLocaleDateString()
+                      : "Recently"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Project Rejected */}
+          {project.status === "rejected" && (
+            <div className="card border border-danger-200 bg-danger-50">
+              <div className="card-header">
+                <h3 className="text-lg font-medium text-danger-700">
+                  Project Rejected
+                </h3>
+              </div>
+              <div className="card-body">
+                <div className="flex items-center space-x-3">
+                  <AlertCircle className="h-6 w-6 text-danger-500" />
+                  <div>
+                    <p className="text-sm font-medium text-danger-700">
+                      Unfortunately, your project was rejected by the admin.
+                    </p>
+                    <p className="text-sm text-danger-600">
+                      Reason: {project.rejectReason || "No reason provided."}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Sidebar */}
@@ -419,31 +505,6 @@ const ProjectDetail = () => {
                   {project.updatedAt
                     ? new Date(project.updatedAt.toDate()).toLocaleDateString()
                     : "N/A"}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Budget Info */}
-          <div className="card">
-            <div className="card-header">
-              <h3 className="text-lg font-medium text-gray-900">Budget</h3>
-            </div>
-            <div className="card-body space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-500">
-                  Your Budget
-                </label>
-                <p className="text-lg font-semibold text-gray-900">
-                  ₹{project.budget?.toLocaleString() || "0"}
-                </p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-500">
-                  Project Amount
-                </label>
-                <p className="text-lg font-semibold text-gray-900">
-                  ₹{project.totalAmount?.toLocaleString() || "0"}
                 </p>
               </div>
             </div>

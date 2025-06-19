@@ -31,10 +31,17 @@ const AdminProjectDetail = () => {
   const [loading, setLoading] = useState(true);
   const [adminNotes, setAdminNotes] = useState("");
   const [showPricingModal, setShowPricingModal] = useState(false);
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false);
   const [pricingData, setPricingData] = useState({
     price: "",
     notes: "",
   });
+  const [deliveryData, setDeliveryData] = useState({
+    projectLink: "",
+    notes: "",
+  });
+  const [rejectReason, setRejectReason] = useState("");
 
   useEffect(() => {
     fetchProject();
@@ -126,6 +133,73 @@ const AdminProjectDetail = () => {
     }
   };
 
+  const handleDeliverySubmit = async (e) => {
+    e.preventDefault();
+
+    if (!deliveryData.projectLink.trim()) {
+      toast.error("Please enter the project link");
+      return;
+    }
+
+    try {
+      const projectRef = doc(db, "projects", id);
+      await updateDoc(projectRef, {
+        status: "delivered",
+        projectLink: deliveryData.projectLink,
+        deliveryNotes: deliveryData.notes,
+        deliveredAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+
+      // Send notification to client
+      await createNotification(
+        project.clientId,
+        "Project Delivered",
+        `Your project "${project.title}" has been delivered! Check the project link in your project details.`,
+        "success",
+        project.id
+      );
+
+      toast.success("Project delivered successfully");
+      setShowDeliveryModal(false);
+      setDeliveryData({ projectLink: "", notes: "" });
+      fetchProject();
+    } catch (error) {
+      console.error("Error delivering project:", error);
+      toast.error("Failed to deliver project");
+    }
+  };
+
+  const handleRejectSubmit = async (e) => {
+    e.preventDefault();
+    if (!rejectReason.trim()) {
+      toast.error("Please provide a reason for rejection");
+      return;
+    }
+    try {
+      const projectRef = doc(db, "projects", id);
+      await updateDoc(projectRef, {
+        status: "rejected",
+        rejectReason,
+        updatedAt: serverTimestamp(),
+      });
+      await createNotification(
+        project.clientId,
+        "Project Rejected",
+        `Your project \"${project.title}\" was rejected. Reason: ${rejectReason}`,
+        "danger",
+        project.id
+      );
+      toast.success("Project rejected");
+      setShowRejectModal(false);
+      setRejectReason("");
+      fetchProject();
+    } catch (error) {
+      console.error("Error rejecting project:", error);
+      toast.error("Failed to reject project");
+    }
+  };
+
   const saveAdminNotes = async () => {
     try {
       const projectRef = doc(db, "projects", id);
@@ -180,23 +254,39 @@ const AdminProjectDetail = () => {
     switch (project.status) {
       case "pending":
         return (
-          <button
-            onClick={() => setShowPricingModal(true)}
-            className="btn-primary"
-          >
-            <Edit className="h-4 w-4 mr-2" />
-            Set Price & Approve
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowPricingModal(true)}
+              className="btn-primary"
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Set Price & Approve
+            </button>
+            <button
+              onClick={() => setShowRejectModal(true)}
+              className="btn-danger"
+            >
+              Reject
+            </button>
+          </div>
         );
       case "approved":
         return (
-          <button
-            onClick={() => updateProjectStatus("in-progress")}
-            className="btn-success"
-          >
-            <AlertCircle className="h-4 w-4 mr-2" />
-            Start Development
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => updateProjectStatus("in-progress")}
+              className="btn-success"
+            >
+              <AlertCircle className="h-4 w-4 mr-2" />
+              Start Development
+            </button>
+            <button
+              onClick={() => setShowRejectModal(true)}
+              className="btn-danger"
+            >
+              Reject
+            </button>
+          </div>
         );
       case "in-progress":
         return (
@@ -211,7 +301,7 @@ const AdminProjectDetail = () => {
       case "completed":
         return (
           <button
-            onClick={() => updateProjectStatus("delivered")}
+            onClick={() => setShowDeliveryModal(true)}
             className="btn-success"
           >
             <Download className="h-4 w-4 mr-2" />
@@ -335,14 +425,6 @@ const AdminProjectDetail = () => {
                         </p>
                       )}
                     </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Budget Range
-                    </label>
-                    <p className="mt-1 text-sm text-gray-900">
-                      ₹{project.budget?.toLocaleString() || "Not specified"}
-                    </p>
                   </div>
                 </div>
 
@@ -588,6 +670,139 @@ const AdminProjectDetail = () => {
                   </button>
                   <button type="submit" className="btn-primary">
                     Approve & Price
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delivery Modal */}
+      {showDeliveryModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Deliver Project
+              </h3>
+              <form onSubmit={handleDeliverySubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Project Title
+                  </label>
+                  <p className="text-sm text-gray-900 mt-1">{project.title}</p>
+                </div>
+                <div>
+                  <label
+                    htmlFor="projectLink"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Project Link *
+                  </label>
+                  <input
+                    type="url"
+                    id="projectLink"
+                    value={deliveryData.projectLink}
+                    onChange={(e) =>
+                      setDeliveryData({
+                        ...deliveryData,
+                        projectLink: e.target.value,
+                      })
+                    }
+                    className="input mt-1"
+                    placeholder="https://drive.google.com/... or any project link"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="deliveryNotes"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Delivery Notes (Optional)
+                  </label>
+                  <textarea
+                    id="deliveryNotes"
+                    value={deliveryData.notes}
+                    onChange={(e) =>
+                      setDeliveryData({
+                        ...deliveryData,
+                        notes: e.target.value,
+                      })
+                    }
+                    className="input mt-1"
+                    rows="3"
+                    placeholder="Any additional notes for the client..."
+                  />
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowDeliveryModal(false);
+                      setDeliveryData({ projectLink: "", notes: "" });
+                    }}
+                    className="btn-outline"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn-success">
+                    <Download className="h-4 w-4 mr-2" />
+                    Deliver Project
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reject Modal */}
+      {showRejectModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Reject Project
+              </h3>
+              <form onSubmit={handleRejectSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Project Title
+                  </label>
+                  <p className="text-sm text-gray-900 mt-1">{project.title}</p>
+                </div>
+                <div>
+                  <label
+                    htmlFor="rejectReason"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Reason for Rejection *
+                  </label>
+                  <textarea
+                    id="rejectReason"
+                    value={rejectReason}
+                    onChange={(e) => setRejectReason(e.target.value)}
+                    className="input mt-1"
+                    rows="3"
+                    placeholder="Please provide a clear reason for rejection"
+                    required
+                  />
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowRejectModal(false);
+                      setRejectReason("");
+                    }}
+                    className="btn-outline"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn-danger">
+                    Reject Project
                   </button>
                 </div>
               </form>

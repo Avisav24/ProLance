@@ -152,6 +152,28 @@ const MyProjects = () => {
     setStatusFilter("all");
   };
 
+  // Helper to get delivery duration in ms
+  const getDeliveryDurationMs = (deliverySpeed) => {
+    switch (deliverySpeed) {
+      case "1_day":
+        return 24 * 60 * 60 * 1000;
+      case "3_days":
+        return 3 * 24 * 60 * 60 * 1000;
+      default:
+        return 7 * 24 * 60 * 60 * 1000;
+    }
+  };
+
+  // Helper to get deadline date
+  const getDeadlineDate = (project) => {
+    if (!project || !project.createdAt || !project.deliverySpeed) return null;
+    const created = project.createdAt.toDate
+      ? project.createdAt.toDate()
+      : new Date(project.createdAt);
+    const duration = getDeliveryDurationMs(project.deliverySpeed);
+    return new Date(created.getTime() + duration);
+  };
+
   if (loading) {
     return (
       <div
@@ -319,12 +341,6 @@ const MyProjects = () => {
                               )}
                             </div>
 
-                            {project.description && (
-                              <p className="text-sm text-gray-600 line-clamp-2 mb-3">
-                                {project.description}
-                              </p>
-                            )}
-
                             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
                               <div className="flex items-center">
                                 <Clock className="h-4 w-4 mr-1.5" />
@@ -343,6 +359,14 @@ const MyProjects = () => {
                                       project.createdAt.toDate()
                                     ).toLocaleDateString()
                                   : "N/A"}
+                              </div>
+                              <div>
+                                <span className="font-medium">Deadline:</span>{" "}
+                                {getDeadlineDate(project)
+                                  ? getDeadlineDate(
+                                      project
+                                    ).toLocaleDateString()
+                                  : "Not specified"}
                               </div>
                             </div>
                           </div>

@@ -90,15 +90,15 @@ const ProjectDetail = () => {
   const getStatusIcon = (status) => {
     switch (status) {
       case "pending":
-        return <Clock className="h-6 w-6 text-warning-500" />;
+        return <Clock className="h-6 w-6 text-amber-500" />;
       case "approved":
-        return <CheckCircle className="h-6 w-6 text-success-500" />;
+        return <CheckCircle className="h-6 w-6" style={{ color: "#03A6A1" }} />;
       case "in-progress":
-        return <AlertCircle className="h-6 w-6 text-primary-500" />;
+        return <AlertCircle className="h-6 w-6 text-blue-500" />;
       case "completed":
-        return <CheckCircle className="h-6 w-6 text-success-500" />;
+        return <CheckCircle className="h-6 w-6" style={{ color: "#03A6A1" }} />;
       case "delivered":
-        return <CheckCircle className="h-6 w-6 text-success-500" />;
+        return <CheckCircle className="h-6 w-6" style={{ color: "#03A6A1" }} />;
       default:
         return <Clock className="h-6 w-6 text-gray-500" />;
     }
@@ -106,17 +106,29 @@ const ProjectDetail = () => {
 
   const getStatusBadge = (status) => {
     const statusClasses = {
-      pending: "status-pending",
-      approved: "status-approved",
-      "in-progress": "status-in-progress",
-      completed: "status-completed",
-      delivered: "status-delivered",
-      rejected: "status-rejected",
-      cancelled: "status-cancelled",
+      pending: "bg-amber-50 text-amber-700 ring-1 ring-amber-600/20",
+      approved: "ring-1 ring-teal-600/20",
+      "in-progress": "bg-blue-50 text-blue-700 ring-1 ring-blue-600/20",
+      completed: "ring-1 ring-teal-600/20",
+      delivered: "ring-1 ring-teal-600/20",
+      rejected: "bg-red-50 text-red-700 ring-1 ring-red-600/20",
+      cancelled: "bg-gray-50 text-gray-700 ring-1 ring-gray-600/20",
     };
 
+    const tealStatuses = ["approved", "completed", "delivered"];
+    const isTealStatus = tealStatuses.includes(status);
+
     return (
-      <span className={statusClasses[status] || "status-pending"}>
+      <span
+        className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full ${
+          !isTealStatus
+            ? statusClasses[status] || "bg-gray-50 text-gray-700"
+            : statusClasses[status]
+        }`}
+        style={
+          isTealStatus ? { backgroundColor: "#E6F7F6", color: "#03A6A1" } : {}
+        }
+      >
         {status.replace("-", " ").toUpperCase()}
       </span>
     );
@@ -170,358 +182,445 @@ const ProjectDetail = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{
+          background:
+            "linear-gradient(to bottom right, #f8f6f8, #ffe4e9, #c8e5ff)",
+        }}
+      >
+        <div className="relative">
+          <div className="h-12 w-12 rounded-full border-t-2 border-b-2 border-blue-500 animate-spin"></div>
+          <div
+            className="absolute inset-0 h-12 w-12 rounded-full border-t-2 border-b-2 animate-spin"
+            style={{
+              borderColor: "#03A6A1",
+              animationDirection: "reverse",
+              animationDuration: "1.5s",
+            }}
+          ></div>
+        </div>
       </div>
     );
   }
 
   if (!project) {
     return (
-      <div className="text-center py-12">
-        <h3 className="text-lg font-medium text-gray-900">Project not found</h3>
-        <p className="text-gray-500 mt-2">
-          The project you're looking for doesn't exist.
-        </p>
-        <Link to={getBackRoute()} className="btn-primary mt-4">
-          Back to Projects
-        </Link>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{
+          background:
+            "linear-gradient(to bottom right, #f8f6f8, #ffe4e9, #c8e5ff)",
+        }}
+      >
+        <div className="text-center py-12">
+          <h3 className="text-lg font-medium text-gray-900">
+            Project not found
+          </h3>
+          <p className="text-gray-500 mt-2">
+            The project you're looking for doesn't exist.
+          </p>
+          <Link
+            to={getBackRoute()}
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md mt-4"
+          >
+            Back to Projects
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Link to={getBackRoute()} className="btn-outline">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {project.title}
-            </h1>
-            <div className="flex flex-wrap gap-1 mt-1">
-              {project.categories && project.categories.length > 0 ? (
-                project.categories.map((cat, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
-                  >
-                    {cat}
-                  </span>
-                ))
-              ) : (
-                <p className="text-gray-600">
-                  {project.category || "No category"}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center space-x-3">
-          {getStatusBadge(project.status)}
-          <Link to={getChatRoute()} className="btn-primary">
-            <MessageSquare className="h-4 w-4 mr-2" />
-            Chat
-          </Link>
-        </div>
-      </div>
-
-      {/* Project Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Status Card */}
-          <div className="card">
-            <div className="card-header">
-              <div className="flex items-center space-x-3">
-                {getStatusIcon(project.status)}
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">
-                    Project Status
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {getStatusDescription(project.status)}
-                  </p>
+    <div
+      className="min-h-screen"
+      style={{
+        background:
+          "linear-gradient(to bottom right, #f8f6f8, #ffe4e9, #c8e5ff)",
+      }}
+    >
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center space-x-4">
+              <Link
+                to={getBackRoute()}
+                className="inline-flex items-center px-4 py-2 border-2 rounded-xl font-medium transition-all duration-200"
+                style={{
+                  borderColor: "#03A6A1",
+                  color: "#03A6A1",
+                  backgroundColor: "white",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = "#E6F7F6";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = "white";
+                }}
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back
+              </Link>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                  {project.title}
+                </h1>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {project.categories && project.categories.length > 0 ? (
+                    project.categories.map((cat, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-blue-100 text-blue-700"
+                      >
+                        {cat}
+                      </span>
+                    ))
+                  ) : (
+                    <p className="text-gray-600">
+                      {project.category || "No category"}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="card-body">
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Project Description
-                  </label>
-                  <p className="text-sm text-gray-900 mt-1">
-                    {project.description}
-                  </p>
-                </div>
+            <div className="flex items-center space-x-3">
+              {getStatusBadge(project.status)}
+              <Link
+                to={getChatRoute()}
+                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+              >
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Chat
+              </Link>
+            </div>
+          </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Technical Requirements
-                  </label>
-                  <p className="text-sm text-gray-900 mt-1 whitespace-pre-wrap">
-                    {project.requirements}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Categories
-                    </label>
-                    <div className="mt-1">
-                      {project.categories && project.categories.length > 0 ? (
-                        <div className="flex flex-wrap gap-1">
-                          {project.categories.map((cat, index) => (
-                            <span
-                              key={index}
-                              className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-primary-100 text-primary-800"
-                            >
-                              {cat}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-gray-900">
-                          {project.category || "Not specified"}
-                        </p>
-                      )}
+          {/* Project Overview */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Status Card */}
+              <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="flex items-center space-x-3">
+                    {getStatusIcon(project.status)}
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Project Status
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {getStatusDescription(project.status)}
+                      </p>
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Deadline
-                    </label>
-                    <p className="text-sm text-gray-900 mt-1">
-                      {getDeadlineDate()
-                        ? getDeadlineDate().toLocaleDateString()
-                        : "Not specified"}
-                    </p>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Payment Breakdown (show for all except pending/rejected) */}
-          {[
-            "approved",
-            "in-progress",
-            "completed",
-            "delivered",
-            "paid",
-            "done",
-          ].includes(project.status) &&
-            project.status !== "rejected" && (
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    Payment Information
-                  </h3>
-                </div>
-                <div className="card-body">
+                <div className="p-6">
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Payment Breakdown
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Project Description
                       </label>
-                      <div className="text-base text-gray-900">
-                        <div>
-                          Base Price: ₹
-                          {project.totalAmount?.toLocaleString() || "0"}
+                      <p className="text-sm text-gray-900 bg-gray-50 p-4 rounded-xl">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Technical Requirements
+                      </label>
+                      <p className="text-sm text-gray-900 whitespace-pre-wrap bg-gray-50 p-4 rounded-xl">
+                        {project.requirements}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Categories
+                        </label>
+                        <div className="mt-1">
+                          {project.categories &&
+                          project.categories.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                              {project.categories.map((cat, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-blue-100 text-blue-700"
+                                >
+                                  {cat}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-sm text-gray-900">
+                              {project.category || "Not specified"}
+                            </p>
+                          )}
                         </div>
-                        <div>
-                          Delivery Extra: ₹
-                          {project.deliveryExtra ? project.deliveryExtra : 0}
-                        </div>
-                        <div className="font-semibold">
-                          Final Amount: ₹
-                          {(
-                            (project.totalAmount || 0) +
-                            (project.deliveryExtra || 0)
-                          ).toLocaleString()}
-                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Deadline
+                        </label>
+                        <p className="text-sm text-gray-900">
+                          {getDeadlineDate()
+                            ? getDeadlineDate().toLocaleDateString()
+                            : "Not specified"}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            )}
-          {/* Payment Section (only for payment proof submission) */}
-          {project.status === "approved" &&
-            project.paymentStatus === "pending" && (
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    Payment Submission
-                  </h3>
-                </div>
-                <div className="card-body">
-                  <form onSubmit={handlePaymentSubmit} className="space-y-4">
-                    <div>
-                      <label
-                        htmlFor="paymentProof"
-                        className="block text-sm font-medium text-gray-700"
+
+              {/* Payment Breakdown (show for all except pending/rejected) */}
+              {[
+                "approved",
+                "in-progress",
+                "completed",
+                "delivered",
+                "paid",
+                "done",
+              ].includes(project.status) &&
+                project.status !== "rejected" && (
+                  <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                    <div className="p-6 border-b border-gray-100">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Payment Information
+                      </h3>
+                    </div>
+                    <div className="p-6">
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-3">
+                            Payment Breakdown
+                          </label>
+                          <div className="bg-gray-50 p-4 rounded-xl space-y-2">
+                            <div className="flex justify-between text-sm">
+                              <span className="text-gray-600">Base Price:</span>
+                              <span className="font-medium text-gray-900">
+                                ₹{project.totalAmount?.toLocaleString() || "0"}
+                              </span>
+                            </div>
+                            <div className="flex justify-between text-sm">
+                              <span className="text-gray-600">
+                                Delivery Extra:
+                              </span>
+                              <span className="font-medium text-gray-900">
+                                ₹
+                                {project.deliveryExtra
+                                  ? project.deliveryExtra
+                                  : 0}
+                              </span>
+                            </div>
+                            <div className="pt-2 border-t border-gray-200 flex justify-between">
+                              <span className="font-medium text-gray-900">
+                                Final Amount:
+                              </span>
+                              <span className="font-semibold text-lg text-blue-600">
+                                ₹
+                                {(
+                                  (project.totalAmount || 0) +
+                                  (project.deliveryExtra || 0)
+                                ).toLocaleString()}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              {/* Payment Section (only for payment proof submission) */}
+              {project.status === "approved" &&
+                project.paymentStatus === "pending" && (
+                  <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                    <div className="p-6 border-b border-gray-100">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Payment Submission
+                      </h3>
+                    </div>
+                    <div className="p-6">
+                      <form
+                        onSubmit={handlePaymentSubmit}
+                        className="space-y-4"
                       >
-                        Payment Proof Details
-                      </label>
-                      <textarea
-                        id="paymentProof"
-                        value={paymentProof}
-                        onChange={(e) => setPaymentProof(e.target.value)}
-                        className="input mt-1"
-                        rows="4"
-                        placeholder="Enter payment transaction details, reference number, or any proof of payment..."
-                        required
+                        <div>
+                          <label
+                            htmlFor="paymentProof"
+                            className="block text-sm font-medium text-gray-700 mb-2"
+                          >
+                            Payment Proof Details
+                          </label>
+                          <textarea
+                            id="paymentProof"
+                            value={paymentProof}
+                            onChange={(e) => setPaymentProof(e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                            rows="4"
+                            placeholder="Enter payment transaction details, reference number, or any proof of payment..."
+                            required
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+                        >
+                          Submit Payment Proof
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+
+              {/* Payment Status */}
+              {project.paymentStatus === "pending_verification" && (
+                <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                  <div className="p-6 border-b border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Payment Status
+                    </h3>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center space-x-3">
+                      <Clock className="h-6 w-6 text-amber-500" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          Payment Proof Submitted
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          We are verifying your payment. You will be notified
+                          once confirmed.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {project.paymentStatus === "done" && (
+                <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                  <div className="p-6 border-b border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Payment Status
+                    </h3>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle
+                        className="h-6 w-6"
+                        style={{ color: "#03A6A1" }}
                       />
-                    </div>
-                    <button type="submit" className="btn-primary">
-                      Submit Payment Proof
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
-
-          {/* Payment Status */}
-          {project.paymentStatus === "pending_verification" && (
-            <div className="card">
-              <div className="card-header">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Payment Status
-                </h3>
-              </div>
-              <div className="card-body">
-                <div className="flex items-center space-x-3">
-                  <Clock className="h-6 w-6 text-warning-500" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      Payment Proof Submitted
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      We are verifying your payment. You will be notified once
-                      confirmed.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {project.paymentStatus === "done" && (
-            <div className="card">
-              <div className="card-header">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Payment Status
-                </h3>
-              </div>
-              <div className="card-body">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-6 w-6 text-success-500" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      Payment Done
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Your payment has been verified and work has started on
-                      your project.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Payment Confirmed */}
-          {project.paymentStatus === "paid" && (
-            <div className="card">
-              <div className="card-header">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Payment Status
-                </h3>
-              </div>
-              <div className="card-body">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-6 w-6 text-success-500" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      Payment Confirmed
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Your payment has been verified. Work on your project has
-                      begun.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Project Delivery */}
-          {project.status === "delivered" && project.projectLink && (
-            <div className="card">
-              <div className="card-header">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Project Delivered! 🎉
-                </h3>
-              </div>
-              <div className="card-body">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="h-6 w-6 text-success-500" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">
-                        Your project has been delivered successfully!
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Click the link below to access your completed project.
-                      </p>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          Payment Done
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Your payment has been verified and work has started on
+                          your project.
+                        </p>
+                      </div>
                     </div>
                   </div>
+                </div>
+              )}
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Project Link
-                    </label>
-                    <a
-                      href={project.projectLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Access Your Project
-                    </a>
+              {/* Payment Confirmed */}
+              {project.paymentStatus === "paid" && (
+                <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                  <div className="p-6 border-b border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Payment Status
+                    </h3>
                   </div>
-
-                  {project.deliveryNotes && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Delivery Notes
-                      </label>
-                      <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">
-                        {project.deliveryNotes}
-                      </p>
+                  <div className="p-6">
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle
+                        className="h-6 w-6"
+                        style={{ color: "#03A6A1" }}
+                      />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          Payment Confirmed
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Your payment has been verified. Work on your project
+                          has begun.
+                        </p>
+                      </div>
                     </div>
-                  )}
-
-                  <div className="text-xs text-gray-500">
-                    Delivered on:{" "}
-                    {project.deliveredAt
-                      ? new Date(
-                          project.deliveredAt.toDate()
-                        ).toLocaleDateString()
-                      : "Recently"}
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* Project Delivery */}
+              {project.status === "delivered" && project.projectLink && (
+                <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                  <div className="p-6 border-b border-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Project Delivered! 🎉
+                    </h3>
+                  </div>
+                  <div className="p-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle
+                          className="h-6 w-6"
+                          style={{ color: "#03A6A1" }}
+                        />
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">
+                            Your project has been delivered successfully!
+                          </p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Click the link below to access your completed
+                            project.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-3">
+                          Project Link
+                        </label>
+                        <a
+                          href={project.projectLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          Access Your Project
+                        </a>
+                      </div>
+
+                      {project.deliveryNotes && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Delivery Notes
+                          </label>
+                          <p className="text-sm text-gray-900 bg-gray-50 p-4 rounded-xl">
+                            {project.deliveryNotes}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="text-xs text-gray-500 pt-2">
+                        Delivered on:{" "}
+                        {project.deliveredAt
+                          ? new Date(
+                              project.deliveredAt.toDate()
+                            ).toLocaleDateString()
+                          : "Recently"}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

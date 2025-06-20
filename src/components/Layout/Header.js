@@ -79,13 +79,19 @@ const Header = () => {
   const currentNavigation =
     userProfile?.role === "admin" ? adminNavigation : navigation;
 
+  const dashboardPath = currentUser
+    ? userProfile?.role === "admin"
+      ? "/admin"
+      : "/dashboard"
+    : "/";
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to={dashboardPath} className="flex items-center space-x-2">
               <img src="/logo.png" alt="Gradely Logo" className="h-10" />
             </Link>
           </div>

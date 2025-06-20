@@ -412,7 +412,20 @@ const ProjectDetail = () => {
                             <div className="flex justify-between text-sm">
                               <span className="text-gray-600">Base Price:</span>
                               <span className="font-medium text-gray-900">
-                                ₹{project.totalAmount?.toLocaleString() || "0"}
+                                {[
+                                  "approved",
+                                  "in-progress",
+                                  "completed",
+                                  "delivered",
+                                ].includes(project.status) ? (
+                                  `₹${
+                                    project.totalAmount?.toLocaleString() || "0"
+                                  }`
+                                ) : (
+                                  <span className="italic text-gray-400">
+                                    Calculating...
+                                  </span>
+                                )}
                               </span>
                             </div>
                             <div className="flex justify-between text-sm">
@@ -420,10 +433,22 @@ const ProjectDetail = () => {
                                 Delivery Extra:
                               </span>
                               <span className="font-medium text-gray-900">
-                                ₹
-                                {project.deliveryExtra
-                                  ? project.deliveryExtra
-                                  : 0}
+                                {[
+                                  "approved",
+                                  "in-progress",
+                                  "completed",
+                                  "delivered",
+                                ].includes(project.status) ? (
+                                  `₹${
+                                    project.deliveryExtra
+                                      ? project.deliveryExtra
+                                      : 0
+                                  }`
+                                ) : (
+                                  <span className="italic text-gray-400">
+                                    Calculating...
+                                  </span>
+                                )}
                               </span>
                             </div>
                             <div className="pt-2 border-t border-gray-200 flex justify-between">
@@ -431,11 +456,21 @@ const ProjectDetail = () => {
                                 Final Amount:
                               </span>
                               <span className="font-semibold text-lg text-blue-600">
-                                ₹
-                                {(
-                                  (project.totalAmount || 0) +
-                                  (project.deliveryExtra || 0)
-                                ).toLocaleString()}
+                                {[
+                                  "approved",
+                                  "in-progress",
+                                  "completed",
+                                  "delivered",
+                                ].includes(project.status) ? (
+                                  `₹${(
+                                    (project.totalAmount || 0) +
+                                    (project.deliveryExtra || 0)
+                                  ).toLocaleString()}`
+                                ) : (
+                                  <span className="italic text-gray-400">
+                                    Calculating...
+                                  </span>
+                                )}
                               </span>
                             </div>
                           </div>
@@ -454,6 +489,16 @@ const ProjectDetail = () => {
                       </h3>
                     </div>
                     <div className="p-6">
+                      <div className="flex flex-col items-center mb-6">
+                        <img
+                          src="/qr.png"
+                          alt="Payment QR Code"
+                          className="h-48 w-48 object-contain rounded-lg shadow"
+                        />
+                        <span className="mt-2 text-gray-600 text-sm">
+                          Scan to pay
+                        </span>
+                      </div>
                       <form
                         onSubmit={handlePaymentSubmit}
                         className="space-y-4"

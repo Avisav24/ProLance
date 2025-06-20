@@ -381,11 +381,21 @@ const MyProjects = () => {
                             Total Amount
                           </div>
                           <div className="text-xl font-semibold text-gray-900">
-                            ₹
-                            {(
-                              (project.totalAmount || 0) +
-                              (project.deliveryExtra || 0)
-                            ).toLocaleString()}
+                            {[
+                              "approved",
+                              "in-progress",
+                              "completed",
+                              "delivered",
+                            ].includes(project.status) ? (
+                              `₹${(
+                                (project.totalAmount || 0) +
+                                (project.deliveryExtra || 0)
+                              ).toLocaleString()}`
+                            ) : (
+                              <span className="italic text-gray-400">
+                                Calculating...
+                              </span>
+                            )}
                           </div>
                         </div>
 

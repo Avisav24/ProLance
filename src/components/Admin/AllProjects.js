@@ -341,7 +341,18 @@ const AllProjects = () => {
                         <div className="flex items-center">
                           <DollarSign className="h-4 w-4 mr-1 text-gray-400" />
                           <span className="text-sm text-gray-900">
-                            ₹{project.totalAmount?.toLocaleString() || "0"}
+                            {[
+                              "approved",
+                              "in-progress",
+                              "completed",
+                              "delivered",
+                            ].includes(project.status) ? (
+                              `₹${project.totalAmount?.toLocaleString() || "0"}`
+                            ) : (
+                              <span className="italic text-gray-400">
+                                Calculating...
+                              </span>
+                            )}
                           </span>
                         </div>
                       </td>

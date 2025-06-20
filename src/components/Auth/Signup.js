@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 import toast from "react-hot-toast";
-import { ReactComponent as University } from './university.svg';
+import { ReactComponent as University } from "./university.svg";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -122,9 +122,8 @@ const Signup = () => {
           <div className="space-y-4">
             {/* Name */}
             <div>
-              
               <div className="mt-1 relative">
-                  <div className="absolute inset-y-8 right-5 mb-5 flex items-center pointer-events-none">
+                <div className="absolute inset-y-8 right-5 mb-5 flex items-center pointer-events-none">
                   <User className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
@@ -139,17 +138,16 @@ const Signup = () => {
                   placeholder=""
                 />
                 <label
-                htmlFor="name"
-                className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"
-              >
-                Full Name 
-              </label>
+                  htmlFor="name"
+                  className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"
+                >
+                  Full Name
+                </label>
               </div>
             </div>
 
             {/* Email */}
             <div>
-              
               <div className="mt-1 relative">
                 <div className="absolute inset-y-8 right-5 mb-5  flex items-center pointer-events-none">
                   <Mail className="h-5 w-5 text-gray-400" />
@@ -166,17 +164,16 @@ const Signup = () => {
                   placeholder="Enter your email"
                 />
                 <label
-                htmlFor="email"
-               className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"
-              >
-                Email address 
-              </label>
+                  htmlFor="email"
+                  className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"
+                >
+                  Email address
+                </label>
               </div>
             </div>
 
             {/* Phone */}
             <div>
-              
               <div className="mt-1 relative">
                 <div className="absolute inset-y-8 right-5 mb-5  flex items-center pointer-events-none">
                   <Phone className="h-5 w-5 text-gray-400" />
@@ -192,203 +189,205 @@ const Signup = () => {
                   placeholder=""
                 />
                 <label
-                htmlFor="phone"
-                className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"              >
-                Phone Number
-              </label>
+                  htmlFor="phone"
+                  className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"
+                >
+                  Phone Number
+                </label>
               </div>
             </div>
 
             {/* College */}
             <div>
-               <div className="mt-1 relative">
+              <div className="mt-1 relative">
                 <div className="absolute inset-y-8 right-5 mb-5  flex items-center pointer-events-none">
                   <University className="h-5 w-5 text-gray-400" />
                 </div>
-                 <input
-                id="college"
-                name="college"
-                type="text"
-                value={formData.college}
-                onChange={handleChange}
-                className="peer block w-full appearance-none rounded-full border border-black bg-white px-3 pt-5 pb-2 text-sm text-black placeholder-transparent focus:border-blue-600 focus:outline-none focus:ring-2"
-                placeholder=""
-              />
-             <label
-                htmlFor="phone"
-                className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"              >
-                College/University
-              </label>
+                <input
+                  id="college"
+                  name="college"
+                  type="text"
+                  value={formData.college}
+                  onChange={handleChange}
+                  className="peer block w-full appearance-none rounded-full border border-black bg-white px-3 pt-5 pb-2 text-sm text-black placeholder-transparent focus:border-blue-600 focus:outline-none focus:ring-2"
+                  placeholder=""
+                />
+                <label
+                  htmlFor="phone"
+                  className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"
+                >
+                  College/University
+                </label>
+              </div>
             </div>
-               </div>
-             
 
             {/* Course */}
             <div>
               <div className="mt-1 relative">
-        <div className="absolute inset-y-8 right-5 mb-5  flex items-center pointer-events-none">
+                <div className="absolute inset-y-8 right-5 mb-5  flex items-center pointer-events-none">
                   <GraduationCap className="h-5 w-5 text-gray-400" />
                 </div>
-              <input
-                id="course"
-                name="course"
-                type="text"
-                value={formData.course}
-                onChange={handleChange}
-                className=" peer block w-full appearance-none rounded-full border border-black bg-white px-3 pt-5 pb-2 text-sm text-black placeholder-transparent focus:border-blue-600 focus:outline-none focus:ring-2"
-                placeholder
-                ="e.g., Computer Science, Engineering"
-              />
-              <label
-                htmlFor="phone"
-                className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"              >
-                Course/Program
-              </label>
-            </div>
+                <input
+                  id="course"
+                  name="course"
+                  type="text"
+                  value={formData.course}
+                  onChange={handleChange}
+                  className=" peer block w-full appearance-none rounded-full border border-black bg-white px-3 pt-5 pb-2 text-sm text-black placeholder-transparent focus:border-blue-600 focus:outline-none focus:ring-2"
+                  placeholder="e.g., Computer Science, Engineering"
+                />
+                <label
+                  htmlFor="phone"
+                  className="absolute left-8 top-0.5 text-sm text-blue-600 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-black peer-focus:top-0.5 peer-focus:text-sm peer-focus:text-blue-600"
+                >
+                  Course/Program
+                </label>
               </div>
-             
+            </div>
 
             {/* Year */}
-           <div className="relative w-full mt-4">
-  {/* Floating Label */}
-  <label
-    htmlFor="year"
-    className="absolute left-3 -top-0 text-sm text-blue-600 bg-white px-1 z-10 rounded-full"
-  >
-    Year of Study
-  </label>
+            <div className="relative w-full mt-4">
+              {/* Floating Label */}
+              <label
+                htmlFor="year"
+                className="absolute left-3 -top-0 text-sm text-blue-600 bg-white px-1 z-10 rounded-full"
+              >
+                Year of Study
+              </label>
 
-  {/* Select Box */}
-  <select
-    id="year"
-    name="year"
-    value={formData.year}
-    onChange={handleChange}
-    className="w-full px-3 pt-5 pb-2 border border-gray-300 rounded-full text-base focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
-  >
-    <option value="">Select year</option>
-    <option value="1st Year">1st Year</option>
-    <option value="2nd Year">2nd Year</option>
-    <option value="3rd Year">3rd Year</option>
-    <option value="4th Year">4th Year</option>
-    <option value="Final Year">Final Year</option>
-  </select>
+              {/* Select Box */}
+              <select
+                id="year"
+                name="year"
+                value={formData.year}
+                onChange={handleChange}
+                className="w-full px-3 pt-5 pb-2 border border-gray-300 rounded-full text-base focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+              >
+                <option value="">Select year</option>
+                <option value="1st Year">1st Year</option>
+                <option value="2nd Year">2nd Year</option>
+                <option value="3rd Year">3rd Year</option>
+                <option value="4th Year">4th Year</option>
+              </select>
 
-  {/* Custom dropdown arrow icon */}
-  <div className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-4 w-4"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </div>
-</div>
+              {/* Custom dropdown arrow icon */}
+              <div className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+            </div>
             {/* Password */}
-           <div className="relative w-full mt-4">
-  {/* Floating Label */}
-  
+            <div className="relative w-full mt-4">
+              {/* Floating Label */}
 
-  {/* Input Wrapper */}
-  <div className="relative">
-    {/* Left Icon */}
-    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-      <Lock className="h-4 w-4 text-gray-400" />
-    </div>
+              {/* Input Wrapper */}
+              <div className="relative">
+                {/* Left Icon */}
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Lock className="h-4 w-4 text-gray-400" />
+                </div>
 
-    {/* Input Field */}
-    <input
-      id="password"
-      name="password"
-      type={showPassword ? "text" : "password"}
-      autoComplete="new-password"
-      required
-      value={formData.password}
-      onChange={handleChange}
-      placeholder="Password"
-      className="peer w-full appearance-none rounded-full border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm text-black placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-<label
-    htmlFor="password"
-    className="absolute left-10 top-0 text-sm text-gray-500 transition-all 
+                {/* Input Field */}
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="new-password"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  className="peer w-full appearance-none rounded-full border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm text-black placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="password"
+                  className="absolute left-10 top-0 text-sm text-gray-500 transition-all 
                peer-placeholder-shown:top-2
                peer-placeholder-shown:text-base 
                peer-placeholder-shown:text-black 
                peer-focus:top-0 
                peer-focus:text-sm 
                peer-focus:text-blue-600"
-  >
-    Password
-  </label>
-    {/* Toggle Visibility Button */}
-    <button
-      type="button"
-      onClick={() => setShowPassword(!showPassword)}
-      className="absolute inset-y-0 right-0 pr-4 flex items-center"
-    >
-      {showPassword ? (
-        <EyeOff className="h-5 w-5 text-gray-400" />
-      ) : (
-        <Eye className="h-5 w-5 text-gray-400" />
-      )}
-    </button>
-  </div>
-</div>
+                >
+                  Password
+                </label>
+                {/* Toggle Visibility Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-400" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-400" />
+                  )}
+                </button>
+              </div>
+            </div>
 
-           <div className="relative w-full mt-4">
-  {/* Floating Label */}
- 
+            <div className="relative w-full mt-4">
+              {/* Floating Label */}
 
-  {/* Input Wrapper */}
-  <div className="relative">
-    {/* Left Icon */}
-    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-      <Lock className="h-4 w-4 text-gray-400" />
-    </div>
+              {/* Input Wrapper */}
+              <div className="relative">
+                {/* Left Icon */}
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Lock className="h-4 w-4 text-gray-400" />
+                </div>
 
-    {/* Input Field */}
-    <input
-      id="confirmPassword"
-      name="confirmPassword"
-      type={showConfirmPassword ? "text" : "password"}
-      autoComplete="new-password"
-      required
-      value={formData.confirmPassword}
-      onChange={handleChange}
-      placeholder="Confirm Password"
-      className="peer w-full appearance-none rounded-full border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm text-black placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-     <label
-    htmlFor="confirmPassword"
-    className="absolute left-10 top-0 text-sm text-gray-500 transition-all 
+                {/* Input Field */}
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  autoComplete="new-password"
+                  required
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  className="peer w-full appearance-none rounded-full border border-gray-300 bg-white py-3 pl-10 pr-10 text-sm text-black placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="confirmPassword"
+                  className="absolute left-10 top-0 text-sm text-gray-500 transition-all 
                peer-placeholder-shown:top-2 
                peer-placeholder-shown:text-base 
                peer-placeholder-shown:text-black 
                peer-focus:top-0
                peer-focus:text-sm 
                peer-focus:text-blue-600"
-  >
-    Confirm Password
-  </label>
+                >
+                  Confirm Password
+                </label>
 
-    {/* Toggle Visibility Button */}
-    <button
-      type="button"
-      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-      className="absolute inset-y-0 right-0 pr-4 flex items-center"
-    >
-      {showConfirmPassword ? (
-        <EyeOff className="h-5 w-5 text-gray-400" />
-      ) : (
-        <Eye className="h-5 w-5 text-gray-400" />
-      )}
-    </button>
-  </div>
-</div>
-</div>
+                {/* Toggle Visibility Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-400" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-400" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
           <div>
             <button
               type="submit"

@@ -28,9 +28,9 @@ import Settings from "./components/Settings/Settings";
 import Navbar from "./components/Navbar/Navbar";
 import About from "./components/Pages/About";
 import Reviews from "./components/Pages/Reviews";
-import {useTypewriter , Cursor } from 'react-simple-typewriter'
-import { motion } from 'framer-motion';
-import video from '../src/home.mp4'
+import { useTypewriter, Cursor } from "react-simple-typewriter";
+import { motion } from "framer-motion";
+import video from "../src/home.mp4";
 import Footer from "./components/Footer/Footer";
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles = ["client", "admin"] }) => {
@@ -95,55 +95,51 @@ const LandingRoute = ({ children }) => {
   return children;
 };
 
-
 // Landing Page Component
 const LandingPage = () => {
   const [text] = useTypewriter({
-    words: ['Web Development', 'App Development', 'College Projects'],
+    words: ["Web Development", "Reports", "College Projects", "Assignments"],
     loop: true,
   });
   return (
-    
-   <div className="min-h-screen bg-brand-gradient">
+    <div className="min-h-screen bg-brand-gradient">
       <Navbar />
-<section className="min-h-screen bg-brand-gradient text-black flex flex-col md:flex-row items-center justify-between px-10 py-12 gap-10">
-  {/* Left: Text content */}
-  <div className="max-w-2xl">
-    <motion.h1
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-      className="text-4xl md:text-5xl font-extrabold leading-tight mb-6"
-    >
-      Say Goodbye to Project Stress. Hello, <span className="text-blue-700">Gradely</span>
-    </motion.h1>
+      <section className="min-h-screen bg-brand-gradient text-black flex flex-col md:flex-row items-center justify-between px-10 py-12 gap-10">
+        {/* Left: Text content */}
+        <div className="max-w-2xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-4xl md:text-5xl font-extrabold leading-tight mb-6"
+          >
+            Say Goodbye to Project Stress. Hello,{" "}
+            <span className="text-blue-700">Gradely</span>
+          </motion.h1>
 
-    <p className="text-lg md:text-xl mb-2">
-      Your one-stop solution. We specialize in{" "}
-      <span className="text-blue-800 font-semibold">
-        {text}
-      </span>
-      <Cursor />
-    </p>
-  </div>
+          <p className="text-lg md:text-xl mb-2">
+            Your one-stop solution. We specialize in{" "}
+            <span className="text-blue-800 font-semibold">{text}</span>
+            <Cursor />
+          </p>
+        </div>
 
-  {/* Right: Video */}
-  <div className="w-full md:w-1/2">
-    <video
-      className="w-full rounded-xl shadow-lg"
-      autoPlay
-      muted
-      loop
-      playsInline
-    >
-      <source src={video} type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-</section>
+        {/* Right: Video */}
+        <div className="w-full md:w-1/2">
+          <video
+            className="w-full rounded-xl shadow-lg"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
 
-
-     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Get Your College Projects
@@ -156,45 +152,56 @@ const LandingPage = () => {
             deadline.
           </p>
           <section className="bg-white py-20 px-6">
-  <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-  {/* Feature Card 1 */}
-  <div className="shadow-lg rounded-xl p-6">
-    <div>
-      <i class="fa-solid fa-gears text-5xl mb-4"></i>
-    </div>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+              {/* Feature Card 1 */}
+              <div className="shadow-lg rounded-xl p-6">
+                <div>
+                  <i class="fa-solid fa-gears text-5xl mb-4"></i>
+                </div>
 
-    <h3 className="text-xl font-bold mb-2">Web Development</h3>
-    <p className="text-gray-600">Build responsive and modern websites with our expert team.</p>
-  </div>
-  {/* Feature Card 2 */}
+                <h3 className="text-xl font-bold mb-2">Web Development</h3>
+                <p className="text-gray-600">
+                  Build responsive and modern websites with our expert team.
+                </p>
+              </div>
+              {/* Feature Card 2 */}
 
-  <div className="shadow-lg rounded-xl p-6">
-    <div>
-      <i class="fa-solid fa-rocket text-5xl mb-4"></i>
-    </div>
-    <h3 className="text-xl font-bold mb-2">App Development</h3>
-    <p className="text-gray-600">iOS and Android apps tailored to your business needs.</p>
-  </div>
-  {/* Feature Card 3 */}
-  <div className="shadow-lg rounded-xl p-6">
-    <div>
-      <i class="fa-solid fa-diagram-project text-5xl mb-4"></i>
-    </div>
-    <h3 className="text-xl font-bold mb-2">College Projects</h3>
-    <p className="text-gray-600">End-to-end support for academic projects with quality assurance.</p>
-  </div>
+              <div className="shadow-lg rounded-xl p-6">
+                <div>
+                  <i class="fa-solid fa-rocket text-5xl mb-4"></i>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Reports</h3>
+                <p className="text-gray-600">
+                  Project reports tailored to your needs.
+                </p>
+              </div>
+              {/* Feature Card 3 */}
+              <div className="shadow-lg rounded-xl p-6">
+                <div>
+                  <i class="fa-solid fa-diagram-project text-5xl mb-4"></i>
+                </div>
+                <h3 className="text-xl font-bold mb-2">College Projects</h3>
+                <p className="text-gray-600">
+                  End-to-end support for academic projects with quality
+                  assurance.
+                </p>
+              </div>
+            </div>
 
-</div>
-
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-            <Link to="/signup" className="btn-primary bg-blue-500 text-lg px-8 py-3">
-              Get Started with Gradely
-            </Link>
-            <Link to="/login" className="btn-outline text-lg px-8 py-3 hover:bg-blue-400 hover:text-white">
-           Sign Up
-            </Link>
-          </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+              <Link
+                to="/signup"
+                className="btn-primary bg-blue-500 text-lg px-8 py-3"
+              >
+                Get Started with Gradely
+              </Link>
+              <Link
+                to="/login"
+                className="btn-outline text-lg px-8 py-3 hover:bg-blue-400 hover:text-white"
+              >
+                Sign Up
+              </Link>
+            </div>
           </section>
         </div>
 
@@ -324,9 +331,8 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-       <Footer/>
+      <Footer />
     </div>
-   
   );
 };
 
@@ -368,8 +374,7 @@ function App() {
 
             <Routes>
               {/* Public Routes */}
-  
-         
+
               <Route
                 path="/"
                 element={
@@ -378,8 +383,8 @@ function App() {
                   </LandingRoute>
                 }
               />
-               <Route path="/about" element={<About />} />
-          <Route path="/reviews" element={<Reviews />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/reviews" element={<Reviews />} />
               <Route
                 path="/login"
                 element={

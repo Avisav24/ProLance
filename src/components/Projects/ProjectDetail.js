@@ -591,32 +591,33 @@ const ProjectDetail = () => {
                 )
               )}
 
-              {project.paymentStatus === "done" && (
-                <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-                  <div className="p-6 border-b border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      Payment Status
-                    </h3>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center space-x-3">
-                      <CheckCircle
-                        className="h-6 w-6"
-                        style={{ color: "#03A6A1" }}
-                      />
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">
-                          Payment Done
-                        </p>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Your payment has been verified and work has started on
-                          your project.
-                        </p>
+              {project.paymentStatus === "done" &&
+                project.status !== "in-progress" && (
+                  <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                    <div className="p-6 border-b border-gray-100">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Payment Status
+                      </h3>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle
+                          className="h-6 w-6"
+                          style={{ color: "#03A6A1" }}
+                        />
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">
+                            Payment Done
+                          </p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Your payment has been verified and work has started
+                            on your project.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Payment Confirmed */}
               {project.paymentStatus === "paid" && (

@@ -104,113 +104,196 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-brand-gradient">
       <Navbar />
-      <section className="min-h-screen bg-brand-gradient text-black flex flex-col md:flex-row items-center justify-between px-10 py-12 gap-10">
-        {/* Left: Text content */}
-        <div className="max-w-2xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-4xl md:text-5xl font-extrabold leading-tight mb-6"
-          >
-            Say Goodbye to Project Stress. Hello,{" "}
-            <span className="text-blue-700">Gradely</span>
-          </motion.h1>
 
-          <p className="text-lg md:text-xl mb-2">
-            Your one-stop solution. We specialize in{" "}
-            <span className="text-blue-800 font-semibold">{text}</span>
-            <Cursor />
-          </p>
-        </div>
+      {/* Hero Section */}
+      <section className="min-h-screen bg-brand-gradient flex items-center">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+            {/* Left: Text content */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="flex-1 text-center lg:text-left"
+            >
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                Say Goodbye to Project Stress. Hello,{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">
+                  Gradely
+                </span>
+              </h1>
 
-        {/* Right: Video */}
-        <div className="w-full md:w-1/2">
-          <video
-            className="w-full rounded-xl shadow-lg"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src={video} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+              <p className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-700">
+                Your one-stop solution. We specialize in{" "}
+                <span className="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded-lg">
+                  {text}
+                </span>
+                <Cursor cursorColor="#2563EB" />
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link
+                  to="/signup"
+                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg text-center"
+                >
+                  Start Your Project
+                </Link>
+                <Link
+                  to="/login"
+                  className="px-8 py-4 border-2 border-blue-600 text-blue-700 font-semibold rounded-2xl transition-all duration-300 hover:bg-blue-50 hover:scale-105 text-center"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Right: Video */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              className="flex-1 w-full max-w-2xl lg:max-w-none"
+            >
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+                <video
+                  className="relative w-full rounded-2xl shadow-2xl border border-white/20"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                >
+                  <source src={video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+      {/* Main Content Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             Get Your College Projects
-            <span className="text-blue-600"> Done Right</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              {" "}
+              Done Right
+            </span>
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
             Gradely connects you with professional developers to complete your
             college projects on time and with exceptional quality. Submit your
             requirements and get high-quality work delivered before your
             deadline.
           </p>
-          <section className="bg-white py-20 px-6">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-              {/* Feature Card 1 */}
-              <div className="shadow-lg rounded-xl p-6">
-                <div>
-                  <i class="fa-solid fa-gears text-5xl mb-4"></i>
-                </div>
+        </motion.div>
 
-                <h3 className="text-xl font-bold mb-2">Web Development</h3>
-                <p className="text-gray-600">
-                  Build responsive and modern websites with our expert team.
-                </p>
+        {/* Feature Cards */}
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 sm:p-12 lg:p-20 mb-20"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            {/* Feature Card 1 */}
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-2xl p-8 border border-gray-100 hover:border-blue-200 transition-all duration-300"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg">
+                <i className="fa-solid fa-gears text-white text-2xl"></i>
               </div>
-              {/* Feature Card 2 */}
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">
+                Web Development
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Build responsive and modern websites with our expert team.
+              </p>
+            </motion.div>
 
-              <div className="shadow-lg rounded-xl p-6">
-                <div>
-                  <i class="fa-solid fa-rocket text-5xl mb-4"></i>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Reports</h3>
-                <p className="text-gray-600">
-                  Project reports tailored to your needs.
-                </p>
+            {/* Feature Card 2 */}
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-2xl p-8 border border-gray-100 hover:border-teal-200 transition-all duration-300"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg">
+                <i className="fa-solid fa-rocket text-white text-2xl"></i>
               </div>
-              {/* Feature Card 3 */}
-              <div className="shadow-lg rounded-xl p-6">
-                <div>
-                  <i class="fa-solid fa-diagram-project text-5xl mb-4"></i>
-                </div>
-                <h3 className="text-xl font-bold mb-2">College Projects</h3>
-                <p className="text-gray-600">
-                  End-to-end support for academic projects with quality
-                  assurance.
-                </p>
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">
+                Reports
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Project reports tailored to your needs.
+              </p>
+            </motion.div>
+
+            {/* Feature Card 3 */}
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-2xl p-8 border border-gray-100 hover:border-purple-200 transition-all duration-300"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg">
+                <i className="fa-solid fa-diagram-project text-white text-2xl"></i>
               </div>
-            </div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">
+                College Projects
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                End-to-end support for academic projects with quality assurance.
+              </p>
+            </motion.div>
+          </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-              <Link
-                to="/signup"
-                className="btn-primary bg-blue-500 text-lg px-8 py-3"
-              >
-                Get Started with Gradely
-              </Link>
-              <Link
-                to="/login"
-                className="btn-outline text-lg px-8 py-3 hover:bg-blue-400 hover:text-white"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </section>
-        </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mt-12"
+          >
+            <Link
+              to="/signup"
+              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg text-center text-lg"
+            >
+              Get Started with Gradely
+            </Link>
+            <Link
+              to="/login"
+              className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 font-semibold rounded-2xl transition-all duration-300 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 hover:scale-105 text-center text-lg"
+            >
+              Sign Up
+            </Link>
+          </motion.div>
+        </motion.section>
 
-        {/* Features */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+        {/* Features Grid */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-20"
+        >
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="text-center group"
+          >
+            <div className="bg-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
               <svg
-                className="w-8 h-8 text-blue-500"
+                className="w-10 h-10 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -223,17 +306,21 @@ const LandingPage = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
               Quality Guaranteed
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-lg leading-relaxed">
               Professional work delivered by experienced developers
             </p>
-          </div>
-          <div className="text-center">
-            <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="text-center group"
+          >
+            <div className="bg-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
               <svg
-                className="w-8 h-8 text-blue-600"
+                className="w-10 h-10 text-teal-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -246,17 +333,21 @@ const LandingPage = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
               On-Time Delivery
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-lg leading-relaxed">
               Meet your deadlines with our reliable delivery system
             </p>
-          </div>
-          <div className="text-center">
-            <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="text-center group"
+          >
+            <div className="bg-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
               <svg
-                className="w-8 h-8 text-blue-600"
+                className="w-10 h-10 text-purple-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -269,67 +360,68 @@ const LandingPage = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
               24/7 Support
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-lg leading-relaxed">
               Get help anytime with our dedicated support team
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* How it works */}
-        <div className="mt-20">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 sm:p-12 lg:p-16"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-12">
             How Gradely Works
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                1
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Submit Project
-              </h3>
-              <p className="text-gray-600">
-                Fill out our detailed project form with your requirements
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                2
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Get Quote
-              </h3>
-              <p className="text-gray-600">
-                Receive a fair price quote within 24 hours
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                3
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Track Progress
-              </h3>
-              <p className="text-gray-600">
-                Monitor your project progress in real-time
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                4
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Receive Delivery
-              </h3>
-              <p className="text-gray-600">
-                Get your completed project before deadline
-              </p>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {[
+              {
+                num: "1",
+                title: "Submit Project",
+                desc: "Fill out our detailed project form with your requirements",
+              },
+              {
+                num: "2",
+                title: "Get Quote",
+                desc: "Receive a fair price quote within 24 hours",
+              },
+              {
+                num: "3",
+                title: "Track Progress",
+                desc: "Monitor your project progress in real-time",
+              },
+              {
+                num: "4",
+                title: "Receive Delivery",
+                desc: "Get your completed project before deadline",
+              },
+            ].map((step, index) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center group"
+              >
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  {step.num}
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">{step.desc}</p>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </motion.div>
       </div>
       <Footer />
     </div>

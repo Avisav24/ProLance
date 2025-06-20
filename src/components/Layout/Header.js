@@ -86,8 +86,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <GraduationCap className="h-8 w-8 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900">Gradely</span>
+              <img src="/logo.png" alt="Gradely Logo" className="h-10" />
             </Link>
           </div>
 

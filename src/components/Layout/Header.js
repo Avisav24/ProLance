@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNotifications } from "../../contexts/NotificationContext";
@@ -23,6 +23,37 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
+
+  const notificationMenuRef = useRef(null);
+  const notificationButtonRef = useRef(null);
+  const userMenuRef = useRef(null);
+  const userMenuButtonRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        notificationMenuRef.current &&
+        !notificationMenuRef.current.contains(event.target) &&
+        notificationButtonRef.current &&
+        !notificationButtonRef.current.contains(event.target)
+      ) {
+        setIsNotificationMenuOpen(false);
+      }
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target) &&
+        userMenuButtonRef.current &&
+        !userMenuButtonRef.current.contains(event.target)
+      ) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -141,6 +172,7 @@ const Header = () => {
                 {/* Notifications */}
                 <div className="relative">
                   <button
+                    ref={notificationButtonRef}
                     onClick={() =>
                       setIsNotificationMenuOpen(!isNotificationMenuOpen)
                     }
@@ -179,6 +211,7 @@ const Header = () => {
 
                   {isNotificationMenuOpen && (
                     <div
+                      ref={notificationMenuRef}
                       className="fixed top-20 right-4 left-4 rounded-2xl bg-white overflow-hidden transform transition-all duration-300 origin-top
                                  sm:absolute sm:top-full sm:left-auto sm:right-0 sm:mt-2 sm:w-96 sm:origin-top-right"
                       style={{
@@ -289,11 +322,12 @@ const Header = () => {
                 {/* User Menu */}
                 <div className="relative ml-2">
                   <button
+                    ref={userMenuButtonRef}
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 text-sm rounded-full focus:outline-none transition-all duration-300 group"
+                    className="flex items-center space-x-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                   >
                     <div
-                      className="h-10 w-10 rounded-full flex items-center justify-center text-white font-bold shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:scale-105"
+                      className="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center"
                       style={{
                         background: `linear-gradient(135deg, #2563EB, #3B82F6)`,
                       }}
@@ -307,7 +341,8 @@ const Header = () => {
 
                   {isUserMenuOpen && (
                     <div
-                      className="absolute right-0 mt-3 w-64 bg-white rounded-2xl overflow-hidden transform transition-all duration-300 origin-top-right"
+                      ref={userMenuRef}
+                      className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-2 z-50 transform transition-all duration-300 origin-top-right"
                       style={{
                         boxShadow:
                           "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",

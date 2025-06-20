@@ -123,14 +123,17 @@ const LandingPage = () => {
                 </span>
               </h1>
 
-              <p className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-700">
-                Your one-stop solution. We specialize in
-                <br />
-                <span className="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded-lg inline-block mt-2">
-                  {text}
-                </span>
-                <Cursor cursorColor="#2563EB" />
-              </p>
+              <div className="mb-8">
+                <p className="text-lg sm:text-xl md:text-2xl text-gray-700">
+                  Your one-stop solution. We specialize in
+                </p>
+                <div className="h-12 sm:h-14 md:h-16 flex items-center justify-center lg:justify-start">
+                  <span className="text-xl sm:text-2xl md:text-3xl text-blue-700 font-bold bg-blue-50 px-3 py-2 rounded-lg inline-block">
+                    {text}
+                  </span>
+                  <Cursor cursorColor="#2563EB" />
+                </div>
+              </div>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mt-6 sm:mt-8">
                 <Link

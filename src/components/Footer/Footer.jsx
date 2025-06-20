@@ -20,7 +20,7 @@ const Footer = () => {
             </div>
             {/* Center Logo or Slogan */}
             <div className="flex flex-col items-center justify-center my-6 md:my-0">
-              <img src="/logo.png" alt="Gradely Logo" className="h-12 mb-2 animate-fadeIn" />
+              <img src="/gradely-removebg.png" alt="Gradely Logo" className="h-24 mb-2 animate-fadeIn" />
               <span className="text-lg text-blue-200 font-semibold tracking-wide">Empowering Your Projects</span>
             </div>
             {/* Social & Legal */}

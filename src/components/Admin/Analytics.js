@@ -370,17 +370,20 @@ const Analytics = () => {
         {/* Project Types */}
         <div className="card">
           <div className="card-header">
-            <h3 className="text-lg font-medium text-gray-900">Project Types</h3>
+            <h3 className="text-lg font-medium text-gray-900">Revenue Split</h3>
           </div>
           <div className="card-body">
             <div className="space-y-4">
-              {Object.entries(analytics.projectTypes).map(([type, count]) => (
-                <div key={type} className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700 capitalize">
-                    {type.replace("-", " ")}
+              {["Rishabh", "Abhinav", "Aaryan"].map((name) => (
+                <div key={name} className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">
+                    {name}
                   </span>
                   <span className="text-sm font-medium text-gray-900">
-                    {count}
+                    ₹
+                    {(analytics.totalRevenue / 3).toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}
                   </span>
                 </div>
               ))}

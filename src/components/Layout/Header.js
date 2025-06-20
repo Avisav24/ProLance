@@ -332,9 +332,8 @@ const Header = () => {
                         background: `linear-gradient(135deg, #2563EB, #3B82F6)`,
                       }}
                     >
-                      <span className="text-sm">
-                        {userProfile?.name?.charAt(0) ||
-                          currentUser.email?.charAt(0)}
+                      <span className="text-white text-sm font-medium">
+                        {userProfile?.name?.charAt(0) || "U"}
                       </span>
                     </div>
                   </button>

@@ -106,41 +106,42 @@ const LandingPage = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="min-h-screen bg-brand-gradient flex items-center">
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <section className="min-h-screen bg-brand-gradient flex items-center px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto w-full py-8 sm:py-12 lg:py-16">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
             {/* Left: Text content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="flex-1 text-center lg:text-left"
+              className="flex-1 w-full text-center lg:text-left"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight mb-4 sm:mb-6">
                 Say Goodbye to Project Stress. Hello,{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 block sm:inline mt-2 sm:mt-0">
                   Gradely
                 </span>
               </h1>
 
               <p className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-700">
-                Your one-stop solution. We specialize in{" "}
-                <span className="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded-lg">
+                Your one-stop solution. We specialize in
+                <br />
+                <span className="text-blue-700 font-bold bg-blue-50 px-2 py-1 rounded-lg inline-block mt-2">
                   {text}
                 </span>
                 <Cursor cursorColor="#2563EB" />
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mt-6 sm:mt-8">
                 <Link
                   to="/signup"
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg text-center"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl sm:rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg text-center"
                 >
                   Start Your Project
                 </Link>
                 <Link
                   to="/login"
-                  className="px-8 py-4 border-2 border-blue-600 text-blue-700 font-semibold rounded-2xl transition-all duration-300 hover:bg-blue-50 hover:scale-105 text-center"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-blue-600 text-blue-700 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:bg-blue-50 hover:scale-105 text-center"
                 >
                   Sign In
                 </Link>
@@ -152,12 +153,12 @@ const LandingPage = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-              className="flex-1 w-full max-w-2xl lg:max-w-none"
+              className="flex-1 w-full max-w-xl lg:max-w-none mt-8 lg:mt-0"
             >
               <div className="relative group">
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+                <div className="absolute -inset-2 sm:inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl sm:rounded-3xl blur-xl sm:blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
                 <video
-                  className="relative w-full rounded-2xl shadow-2xl border border-white/20"
+                  className="relative w-full rounded-xl sm:rounded-2xl shadow-lg sm:shadow-2xl border border-white/20"
                   autoPlay
                   muted
                   loop

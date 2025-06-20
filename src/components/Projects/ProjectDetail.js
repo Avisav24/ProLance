@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNotifications } from "../../contexts/NotificationContext";
 import {
   ArrowLeft,
   MessageSquare,
@@ -32,6 +33,7 @@ const getDeliveryDurationMs = (deliverySpeed) => {
 const ProjectDetail = () => {
   const { id } = useParams();
   const { currentUser, userProfile } = useAuth();
+  const { createNotificationForAdmins } = useNotifications();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [paymentProof, setPaymentProof] = useState("");
@@ -77,6 +79,15 @@ const ProjectDetail = () => {
         paymentProof: paymentProof,
         updatedAt: new Date(),
       });
+
+      await createNotificationForAdmins(
+        "Payment Proof Submitted",
+        `Payment proof has been submitted for project "${project.title}" by ${
+          userProfile?.name || currentUser.email
+        }.`,
+        "info",
+        project.id
+      );
 
       toast.success("Payment proof submitted successfully");
       setPaymentProof("");

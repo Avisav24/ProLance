@@ -10,6 +10,7 @@ import {
   doc,
   updateDoc,
   writeBatch,
+  getDocs,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 
@@ -118,6 +119,43 @@ export const NotificationProvider = ({ children }) => {
     }
   };
 
+  const createNotificationForAdmins = async (
+    title,
+    message,
+    type = "info",
+    projectId = null
+  ) => {
+    try {
+      const adminsQuery = query(
+        collection(db, "users"),
+        where("role", "==", "admin")
+      );
+      const adminSnapshot = await getDocs(adminsQuery);
+      if (adminSnapshot.empty) {
+        console.log("No admin users found to notify.");
+        return;
+      }
+
+      const batch = writeBatch(db);
+      adminSnapshot.forEach((adminDoc) => {
+        const adminId = adminDoc.id;
+        const notificationRef = doc(collection(db, "notifications"));
+        batch.set(notificationRef, {
+          recipientId: adminId,
+          title,
+          message,
+          type,
+          projectId,
+          read: false,
+          createdAt: serverTimestamp(),
+        });
+      });
+      await batch.commit();
+    } catch (error) {
+      console.error("Error creating notification for admins:", error);
+    }
+  };
+
   const value = {
     notifications,
     unreadCount,
@@ -125,6 +163,7 @@ export const NotificationProvider = ({ children }) => {
     markAsRead,
     markAllAsRead,
     createNotification,
+    createNotificationForAdmins,
   };
 
   return (

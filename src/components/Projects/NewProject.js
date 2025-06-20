@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { useNotifications } from "../../contexts/NotificationContext";
 import { FileText, Calendar, DollarSign, Send, Check } from "lucide-react";
 import toast from "react-hot-toast";
 
 const NewProject = () => {
   const { currentUser, userProfile } = useAuth();
+  const { createNotificationForAdmins } = useNotifications();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -86,7 +88,17 @@ const NewProject = () => {
         updatedAt: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "projects"), projectData);
+      const docRef = await addDoc(collection(db, "projects"), projectData);
+
+      await createNotificationForAdmins(
+        "New Project Submitted",
+        `A new project "${formData.title}" has been submitted by ${
+          userProfile?.name || currentUser.email
+        }.`,
+        "info",
+        docRef.id
+      );
+
       toast.success("Project submitted successfully!");
       navigate("/my-projects");
     } catch (error) {

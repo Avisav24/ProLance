@@ -333,7 +333,7 @@ const AdminProjectDetail = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen mt-12 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">

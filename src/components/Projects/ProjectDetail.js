@@ -498,6 +498,13 @@ const ProjectDetail = () => {
                         <span className="mt-2 text-gray-600 text-sm">
                           Scan to pay
                         </span>
+                        <span className="mt-2 text-gray-600 text-sm text-center">
+                          Submit the proof Screenshot at{" "}
+                          <span className="font-semibold">
+                            gradelybusiness@gmail.com
+                          </span>
+                          , with your details.
+                        </span>
                       </div>
                       <form
                         onSubmit={handlePaymentSubmit}
@@ -516,7 +523,7 @@ const ProjectDetail = () => {
                             onChange={(e) => setPaymentProof(e.target.value)}
                             className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                             rows="4"
-                            placeholder="Enter payment transaction details, reference number, or any proof of payment..."
+                            placeholder="Type - SUBMITTED for verification"
                             required
                           />
                         </div>
@@ -532,7 +539,7 @@ const ProjectDetail = () => {
                 )}
 
               {/* Payment Status */}
-              {project.paymentStatus === "pending_verification" && (
+              {project.status === "in-progress" ? (
                 <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-100">
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -541,19 +548,47 @@ const ProjectDetail = () => {
                   </div>
                   <div className="p-6">
                     <div className="flex items-center space-x-3">
-                      <Clock className="h-6 w-6 text-amber-500" />
+                      <CheckCircle
+                        className="h-6 w-6"
+                        style={{ color: "#03A6A1" }}
+                      />
                       <div>
                         <p className="text-sm font-medium text-gray-900">
-                          Payment Proof Submitted
+                          Payment Approved
                         </p>
                         <p className="text-sm text-gray-600 mt-1">
-                          We are verifying your payment. You will be notified
-                          once confirmed.
+                          Your payment has been approved and work has started on
+                          your project.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
+              ) : (
+                project.paymentStatus === "pending_verification" &&
+                project.status !== "in-progress" && (
+                  <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                    <div className="p-6 border-b border-gray-100">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Payment Status
+                      </h3>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center space-x-3">
+                        <Clock className="h-6 w-6 text-amber-500" />
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">
+                            Payment Proof Submitted
+                          </p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            We are verifying your payment. You will be notified
+                            once confirmed.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
               )}
 
               {project.paymentStatus === "done" && (

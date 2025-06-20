@@ -6,6 +6,7 @@ import {
   Navigate,
   Link,
 } from "react-router-dom";
+
 import { Toaster } from "react-hot-toast";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
@@ -24,7 +25,13 @@ import ProjectDetail from "./components/Projects/ProjectDetail";
 import Chat from "./components/Chat/Chat";
 import Profile from "./components/Profile/Profile";
 import Settings from "./components/Settings/Settings";
-
+import Navbar from "./components/Navbar/Navbar";
+import About from "./components/Pages/About";
+import Reviews from "./components/Pages/Reviews";
+import {useTypewriter , Cursor } from 'react-simple-typewriter'
+import { motion } from 'framer-motion';
+import video from '../src/home.mp4'
+import Footer from "./components/Footer/Footer";
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles = ["client", "admin"] }) => {
   const { currentUser, userProfile, loading } = useAuth();
@@ -54,6 +61,7 @@ const ProtectedRoute = ({ children, allowedRoles = ["client", "admin"] }) => {
 };
 
 // Public Route Component (redirects if already logged in)
+
 const PublicRoute = ({ children }) => {
   const { currentUser, userProfile, loading } = useAuth();
 
@@ -87,15 +95,59 @@ const LandingRoute = ({ children }) => {
   return children;
 };
 
+
 // Landing Page Component
 const LandingPage = () => {
+  const [text] = useTypewriter({
+    words: ['Web Development', 'App Development', 'College Projects'],
+    loop: true,
+  });
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+   <div className="min-h-screen bg-brand-gradient">
+      <Navbar />
+<section className="min-h-screen bg-brand-gradient text-black flex flex-col md:flex-row items-center justify-between px-10 py-12 gap-10">
+  {/* Left: Text content */}
+  <div className="max-w-2xl">
+    <motion.h1
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="text-4xl md:text-5xl font-extrabold leading-tight mb-6"
+    >
+      Say Goodbye to Project Stress. Hello, <span className="text-blue-700">Gradely</span>
+    </motion.h1>
+
+    <p className="text-lg md:text-xl mb-2">
+      Your one-stop solution. We specialize in{" "}
+      <span className="text-blue-800 font-semibold">
+        {text}
+      </span>
+      <Cursor />
+    </p>
+  </div>
+
+  {/* Right: Video */}
+  <div className="w-full md:w-1/2">
+    <video
+      className="w-full rounded-xl shadow-lg"
+      autoPlay
+      muted
+      loop
+      playsInline
+    >
+      <source src={video} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
+
+     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Get Your College Projects
-            <span className="text-primary-600"> Done Right</span>
+            <span className="text-blue-600"> Done Right</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
             Gradely connects you with professional developers to complete your
@@ -103,14 +155,47 @@ const LandingPage = () => {
             requirements and get high-quality work delivered before your
             deadline.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/signup" className="btn-primary text-lg px-8 py-3">
+          <section className="bg-white py-20 px-6">
+  <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+  {/* Feature Card 1 */}
+  <div className="shadow-lg rounded-xl p-6">
+    <div>
+      <i class="fa-solid fa-gears text-5xl mb-4"></i>
+    </div>
+
+    <h3 className="text-xl font-bold mb-2">Web Development</h3>
+    <p className="text-gray-600">Build responsive and modern websites with our expert team.</p>
+  </div>
+  {/* Feature Card 2 */}
+
+  <div className="shadow-lg rounded-xl p-6">
+    <div>
+      <i class="fa-solid fa-rocket text-5xl mb-4"></i>
+    </div>
+    <h3 className="text-xl font-bold mb-2">App Development</h3>
+    <p className="text-gray-600">iOS and Android apps tailored to your business needs.</p>
+  </div>
+  {/* Feature Card 3 */}
+  <div className="shadow-lg rounded-xl p-6">
+    <div>
+      <i class="fa-solid fa-diagram-project text-5xl mb-4"></i>
+    </div>
+    <h3 className="text-xl font-bold mb-2">College Projects</h3>
+    <p className="text-gray-600">End-to-end support for academic projects with quality assurance.</p>
+  </div>
+
+</div>
+
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+            <Link to="/signup" className="btn-primary bg-blue-500 text-lg px-8 py-3">
               Get Started with Gradely
             </Link>
-            <Link to="/login" className="btn-outline text-lg px-8 py-3">
-              Sign In
+            <Link to="/login" className="btn-outline text-lg px-8 py-3 hover:bg-blue-400 hover:text-white">
+           Sign Up
             </Link>
           </div>
+          </section>
         </div>
 
         {/* Features */}
@@ -118,7 +203,7 @@ const LandingPage = () => {
           <div className="text-center">
             <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
               <svg
-                className="w-8 h-8 text-primary-600"
+                className="w-8 h-8 text-blue-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -141,7 +226,7 @@ const LandingPage = () => {
           <div className="text-center">
             <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
               <svg
-                className="w-8 h-8 text-primary-600"
+                className="w-8 h-8 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -164,7 +249,7 @@ const LandingPage = () => {
           <div className="text-center">
             <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
               <svg
-                className="w-8 h-8 text-primary-600"
+                className="w-8 h-8 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -193,7 +278,7 @@ const LandingPage = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="bg-primary-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 1
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -204,7 +289,7 @@ const LandingPage = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-primary-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 2
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -215,7 +300,7 @@ const LandingPage = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-primary-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 3
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -226,7 +311,7 @@ const LandingPage = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-primary-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+              <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 4
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -239,7 +324,9 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+       <Footer/>
     </div>
+   
   );
 };
 
@@ -281,6 +368,8 @@ function App() {
 
             <Routes>
               {/* Public Routes */}
+  
+         
               <Route
                 path="/"
                 element={
@@ -289,6 +378,8 @@ function App() {
                   </LandingRoute>
                 }
               />
+               <Route path="/about" element={<About />} />
+          <Route path="/reviews" element={<Reviews />} />
               <Route
                 path="/login"
                 element={

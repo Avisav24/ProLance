@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { Mail, Lock, Eye, EyeOff, GraduationCap } from "lucide-react";
 import toast from "react-hot-toast";
+import { getAuth, signOut } from "firebase/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +24,12 @@ const Login = () => {
     setLoading(true);
     try {
       const { user, profile } = await login(email, password);
+      if (!user.emailVerified) {
+        const auth = getAuth();
+        await signOut(auth);
+        toast.error("Please verify your email before signing in.");
+        return;
+      }
       toast.success("Welcome back to Gradely!");
 
       // Redirect based on user role

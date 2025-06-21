@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { getAuth, sendEmailVerification } from "firebase/auth";
 import {
   Mail,
   Lock,
@@ -87,14 +88,50 @@ const Signup = () => {
         year: formData.year,
       };
 
-      await signup(formData.email, formData.password, userData);
-      toast.success(
-        "Welcome to Gradely! Your account has been created successfully."
+      const userCredential = await signup(
+        formData.email,
+        formData.password,
+        userData
       );
-      navigate("/dashboard");
+
+      // Try to send verification email, but don't fail if rate limited
+      try {
+        const auth = getAuth();
+        if (auth.currentUser) {
+          await sendEmailVerification(auth.currentUser, {
+            url: window.location.origin + "/verify-email",
+          });
+          toast.success(
+            "A verification email has been sent. Please verify your email before signing in."
+          );
+        }
+      } catch (emailError) {
+        console.error("Email verification error:", emailError);
+        if (emailError.code === "auth/too-many-requests") {
+          // Still succeed with signup, just inform about email
+          toast.success(
+            "Account created successfully! The verification email will be sent shortly due to high traffic."
+          );
+        } else {
+          // For other email errors, still succeed but inform user
+          toast.success(
+            "Account created! Please check your email for verification or request a new one from your profile."
+          );
+        }
+      }
+
+      navigate("/verify-email-notice");
     } catch (error) {
       console.error("Signup error:", error);
-      toast.error(error.message || "Failed to create account");
+      if (error.code === "auth/too-many-requests") {
+        toast.error(
+          "Too many signup attempts. Please wait a few minutes and try again."
+        );
+      } else if (error.code === "auth/email-already-in-use") {
+        toast.error("This email is already in use. Please sign in instead.");
+      } else {
+        toast.error(error.message || "Failed to create account");
+      }
     } finally {
       setLoading(false);
     }

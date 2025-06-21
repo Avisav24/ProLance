@@ -32,6 +32,8 @@ import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 import video from "../src/home.mp4";
 import Footer from "./components/Footer/Footer";
+import VerifyEmailNotice from "./components/Auth/VerifyEmailNotice";
+import EmailVerified from "./components/Auth/EmailVerified";
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles = ["client", "admin"] }) => {
   const { currentUser, userProfile, loading } = useAuth();
@@ -99,7 +101,7 @@ const LandingRoute = ({ children }) => {
 const LandingPage = () => {
   const [text] = useTypewriter({
     words: ["Web Development", "Reports", "College Projects", "Assignments"],
-    loop: true,
+    loop: 0,
   });
   return (
     <div className="min-h-screen bg-brand-gradient">
@@ -130,8 +132,8 @@ const LandingPage = () => {
                 <div className="h-12 sm:h-14 md:h-16 flex items-center justify-center lg:justify-start">
                   <span className="text-xl sm:text-2xl md:text-3xl text-blue-700 font-bold bg-blue-50 px-3 py-2 rounded-lg inline-block">
                     {text}
+                    <Cursor cursorColor="#2563EB" />
                   </span>
-                  <Cursor cursorColor="#2563EB" />
                 </div>
               </div>
 
@@ -497,6 +499,14 @@ function App() {
                   </AuthRoute>
                 }
               />
+
+              {/* Email Verification Notice */}
+              <Route
+                path="/verify-email-notice"
+                element={<VerifyEmailNotice />}
+              />
+              {/* Email Verified Callback */}
+              <Route path="/verify-email" element={<EmailVerified />} />
 
               {/* Protected Client Routes */}
               <Route

@@ -495,7 +495,7 @@ const Header = () => {
         )}
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fadeInNav {
           from {
             opacity: 0;

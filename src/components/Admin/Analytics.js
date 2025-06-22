@@ -59,7 +59,7 @@ const Analytics = () => {
 
       // Calculate basic stats
       const totalRevenue = projects.reduce(
-        (sum, p) => sum + (p.totalAmount || 0),
+        (sum, p) => sum + ((p.totalAmount || 0) + (p.deliveryExtra || 0)),
         0
       );
       const totalProjects = projects.length;
@@ -100,7 +100,8 @@ const Analytics = () => {
             );
           });
           if (monthIndex !== -1) {
-            months[monthIndex].revenue += project.totalAmount || 0;
+            months[monthIndex].revenue +=
+              (project.totalAmount || 0) + (project.deliveryExtra || 0);
             months[monthIndex].projects += 1;
           }
         }
@@ -126,7 +127,7 @@ const Analytics = () => {
         title: project.title,
         clientName: project.clientName,
         status: project.status,
-        amount: project.totalAmount || 0,
+        amount: (project.totalAmount || 0) + (project.deliveryExtra || 0),
         date: project.createdAt?.toDate(),
       }));
 

@@ -71,7 +71,7 @@ const AdminDashboard = () => {
         ["completed", "delivered"].includes(p.status)
       ).length;
       const totalRevenue = projects.reduce(
-        (sum, p) => sum + (p.totalAmount || 0),
+        (sum, p) => sum + ((p.totalAmount || 0) + (p.deliveryExtra || 0)),
         0
       );
       const totalClients = clients.length;
@@ -84,7 +84,7 @@ const AdminDashboard = () => {
         return createdAt && createdAt >= thisMonthStart;
       });
       const thisMonthRevenue = thisMonthProjects.reduce(
-        (sum, p) => sum + (p.totalAmount || 0),
+        (sum, p) => sum + ((p.totalAmount || 0) + (p.deliveryExtra || 0)),
         0
       );
 

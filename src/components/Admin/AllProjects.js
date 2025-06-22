@@ -347,7 +347,10 @@ const AllProjects = () => {
                               "completed",
                               "delivered",
                             ].includes(project.status) ? (
-                              `₹${project.totalAmount?.toLocaleString() || "0"}`
+                              `₹${(
+                                (project.totalAmount || 0) +
+                                (project.deliveryExtra || 0)
+                              ).toLocaleString()}`
                             ) : (
                               <span className="italic text-gray-400">
                                 Calculating...

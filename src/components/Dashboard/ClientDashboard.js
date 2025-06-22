@@ -69,7 +69,7 @@ const ClientDashboard = () => {
           (p) => p.status === "completed" || p.status === "delivered"
         ).length,
         totalSpent: projectsData.reduce(
-          (sum, p) => sum + (p.totalAmount || 0),
+          (sum, p) => sum + ((p.totalAmount || 0) + (p.deliveryExtra || 0)),
           0
         ),
       };
@@ -379,7 +379,15 @@ const ClientDashboard = () => {
                     <div className="flex items-center justify-between sm:justify-end space-x-4">
                       <div className="text-left sm:text-right">
                         <p className="text-sm font-semibold text-gray-900">
-                          ₹{project.totalAmount?.toLocaleString() || "0"}
+                          ₹
+                          {(project.totalAmount || 0) +
+                            (project.deliveryExtra || 0) >
+                          0
+                            ? (
+                                (project.totalAmount || 0) +
+                                (project.deliveryExtra || 0)
+                              ).toLocaleString()
+                            : "Calculating..."}
                         </p>
                         <p className="text-xs text-gray-500">
                           {project.createdAt

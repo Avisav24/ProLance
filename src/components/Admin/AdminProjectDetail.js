@@ -255,18 +255,20 @@ const AdminProjectDetail = () => {
     switch (project.status) {
       case "pending":
         return (
-          <div className="flex gap-2">
+          <>
             <button
-              onClick={() => setShowPricingModal(true)}
+              onClick={() => {
+                setShowPricingModal(true);
+              }}
               className="btn-primary"
             >
               <Edit className="h-4 w-4 mr-2" />
               Set Price & Approve
             </button>
-            <button onClick={handleRejectProject} className="btn-danger">
+            <button onClick={handleRejectProject} className="btn-danger ml-2">
               Reject Project
             </button>
-          </div>
+          </>
         );
       case "approved":
         if (
@@ -694,6 +696,73 @@ const AdminProjectDetail = () => {
                   </button>
                   <button type="submit" className="btn-primary">
                     Deliver
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {showPricingModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Set Price & Approve Project
+              </h3>
+              <form onSubmit={handlePricingSubmit} className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="price"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Amount (₹)
+                  </label>
+                  <input
+                    type="number"
+                    id="price"
+                    value={pricingData.price}
+                    onChange={(e) =>
+                      setPricingData({ ...pricingData, price: e.target.value })
+                    }
+                    className="input mt-1"
+                    placeholder="Enter project amount"
+                    min="0"
+                    step="any"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="notes"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Admin Notes (Optional)
+                  </label>
+                  <textarea
+                    id="notes"
+                    value={pricingData.notes}
+                    onChange={(e) =>
+                      setPricingData({ ...pricingData, notes: e.target.value })
+                    }
+                    className="input mt-1"
+                    rows="3"
+                    placeholder="Any notes for the client..."
+                  />
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowPricingModal(false);
+                      setPricingData({ price: "", notes: "" });
+                    }}
+                    className="btn-outline"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn-primary">
+                    Approve & Price
                   </button>
                 </div>
               </form>

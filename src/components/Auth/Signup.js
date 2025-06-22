@@ -10,6 +10,7 @@ import {
   User,
   Phone,
   GraduationCap,
+  AlertCircle,
 } from "lucide-react";
 
 import toast from "react-hot-toast";
@@ -31,6 +32,9 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const { signup } = useAuth();
   const navigate = useNavigate();
+
+  // Detect Brave browser
+  const isBrave = navigator.brave && navigator.brave.isBrave();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -140,6 +144,22 @@ const Signup = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-brand-gradient py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
+        {/* Brave Browser Warning */}
+        {isBrave && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+            <div className="flex items-start">
+              <AlertCircle className="h-5 w-5 text-yellow-600 mr-2 flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-yellow-800">
+                <p className="font-medium">Using Brave Browser?</p>
+                <p className="mt-1">
+                  Brave's shields may block signup. Please disable shields for
+                  this site or use Chrome/Firefox.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-10 border border-white/20">
           <div>
             <div className="flex justify-center mb-6 group">

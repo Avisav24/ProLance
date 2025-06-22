@@ -27,9 +27,6 @@ const Footer = () => {
             <div className="md:text-right text-center">
               <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
               <div className="flex justify-center md:justify-end space-x-3 mb-6">
-                <a href="#" className="bg-white/10 hover:bg-blue-600 transition-colors rounded-full p-2 text-2xl"><i className="fab fa-facebook"></i></a>
-                <a href="#" className="bg-white/10 hover:bg-blue-600 transition-colors rounded-full p-2 text-2xl"><i className="fab fa-twitter"></i></a>
-                <a href="#" className="bg-white/10 hover:bg-blue-600 transition-colors rounded-full p-2 text-2xl"><i className="fab fa-linkedin"></i></a>
                 <a href="#" className="bg-white/10 hover:bg-blue-600 transition-colors rounded-full p-2 text-2xl"><i className="fab fa-instagram"></i></a>
               </div>
               <div className="text-sm text-gray-400">

@@ -103,331 +103,182 @@ const LandingPage = () => {
     words: ["Web Development", "Reports", "College Projects", "Assignments"],
     loop: 0,
   });
+
+  const bowls = [
+    "Startups and Entrepreneurship",
+    "Designers",
+    "The Worklife Bowl",
+    "Career Pivot",
+    "Job Referrals",
+    "Tech",
+  ];
+
+  const suggestedBowls = [
+    {
+      name: "Job Hunting in Tech",
+      members: "7M",
+      desc: "A community to discuss applying for jobs and interview prep.",
+    },
+    {
+      name: "Career Advice for Students",
+      members: "3M",
+      desc: "Ask questions and get advice from professionals.",
+    },
+    {
+      name: "MBA Applicants",
+      members: "137K",
+      desc: "All things MBA admissions, essays, and profiles.",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-brand-gradient">
+    <div className="min-h-screen bg-[#f4f5f7]">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="min-h-screen bg-brand-gradient flex items-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto w-full py-8 sm:py-12 lg:py-16">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
-            {/* Left: Text content */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="flex-1 w-full text-center lg:text-left"
-            >
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight mb-4 sm:mb-6">
-                Say Goodbye to Project Stress. Hello,{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 block sm:inline mt-2 sm:mt-0">
-                  ProLance
-                </span>
-              </h1>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)_320px] gap-6">
+          <motion.aside
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45 }}
+            className="space-y-4"
+          >
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+              <p className="text-sm text-gray-500">Post anonymously as</p>
+              <p className="font-semibold text-gray-900">Product Designer</p>
+              <button className="mt-4 px-4 py-2 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-black transition-colors">
+                Create post +
+              </button>
+            </div>
 
-              <div className="mb-8">
-                <p className="text-lg sm:text-xl md:text-2xl text-gray-700">
-                  Your one-stop solution. We specialize in
-                </p>
-                <div className="h-12 sm:h-14 md:h-16 flex items-center justify-center lg:justify-start">
-                  <span className="text-xl sm:text-2xl md:text-3xl text-blue-700 font-bold bg-blue-50 px-3 py-2 rounded-lg inline-block">
-                    {text}
-                    <Cursor cursorColor="#2563EB" />
-                  </span>
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+              <h3 className="font-semibold text-gray-900 mb-3">My Spaces</h3>
+              <ul className="space-y-2 text-sm text-gray-700">
+                {bowls.map((bowl) => (
+                  <li key={bowl} className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    {bowl}
+                  </li>
+                ))}
+              </ul>
+              <button className="mt-4 px-3 py-2 rounded-lg border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors">
+                Explore Spaces
+              </button>
+            </div>
+          </motion.aside>
+
+          <section className="space-y-4">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.05 }}
+              className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm"
+            >
+              <div className="w-full rounded-xl bg-gray-100 px-4 py-3 text-gray-400 mb-3">
+                Search for discussions
+              </div>
+              <div className="rounded-xl border border-gray-200 px-4 py-3 text-gray-500">
+                Post as "Student"
+              </div>
+            </motion.div>
+
+            <motion.article
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.12 }}
+              className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <h4 className="font-semibold text-gray-900">The Worklife Space</h4>
+                  <p className="text-sm text-gray-500">Community Manager</p>
                 </div>
+                <span className="text-xs text-gray-400">3d</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mt-6 sm:mt-8">
+              <p className="mt-3 text-gray-800 font-medium">
+                Early in your career, what impacted your quality of life the most?
+              </p>
+
+              <div className="mt-4 rounded-xl border border-gray-200 overflow-hidden text-sm font-medium text-gray-700">
+                {["Housing affordability", "Job/growth opportunities", "Work-life balance", "Other (comment)"].map((item) => (
+                  <button
+                    key={item}
+                    className="w-full text-left px-4 py-3 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors"
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-4 flex items-center gap-5 text-sm text-gray-500">
+                <span>Like</span>
+                <span>58 comments</span>
+                <span>2 shares</span>
+              </div>
+            </motion.article>
+
+            <motion.article
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.18 }}
+              className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm"
+            >
+              <h4 className="font-semibold text-gray-900">Built for outcomes, not just tasks</h4>
+              <p className="mt-2 text-gray-600 leading-relaxed">
+                ProLance helps you ship full assignments and project work with
+                clear milestones in {text}
+                <Cursor cursorColor="#374151" />
+              </p>
+              <div className="mt-4 rounded-xl overflow-hidden border border-gray-200">
+                <video className="w-full" autoPlay muted loop playsInline>
+                  <source src={video} type="video/mp4" />
+                </video>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
                 <Link
                   to="/signup"
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl sm:rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg text-center"
+                  className="px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black transition-colors"
                 >
-                  Start Your Project
+                  Start project
                 </Link>
                 <Link
                   to="/login"
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-blue-600 text-blue-700 font-semibold rounded-xl sm:rounded-2xl transition-all duration-300 hover:bg-blue-50 hover:scale-105 text-center"
+                  className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
                 >
-                  Sign In
+                  Sign in
                 </Link>
               </div>
-            </motion.div>
+            </motion.article>
+          </section>
 
-            {/* Right: Video */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-              className="flex-1 w-full max-w-xl lg:max-w-none mt-8 lg:mt-0"
-            >
-              <div className="relative group">
-                <div className="absolute -inset-2 sm:inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl sm:rounded-3xl blur-xl sm:blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
-                <video
-                  className="relative w-full rounded-xl sm:rounded-2xl shadow-lg sm:shadow-2xl border border-white/20"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                >
-                  <source src={video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Get Your College Projects
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              {" "}
-              Done Right
-            </span>
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-            ProLance connects you with professional developers to complete your
-            college projects on time and with exceptional quality. Submit your
-            requirements and get high-quality work delivered before your
-            deadline.
-          </p>
-        </motion.div>
-
-        {/* Feature Cards */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 sm:p-12 lg:p-20 mb-20"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-            {/* Feature Card 1 */}
-            <motion.div
-              whileHover={{ y: -10, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-2xl p-8 border border-gray-100 hover:border-blue-200 transition-all duration-300"
-            >
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg">
-                <i className="fa-solid fa-gears text-white text-2xl"></i>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">
-                Web Development
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Build responsive and modern websites with our expert team.
-              </p>
-            </motion.div>
-
-            {/* Feature Card 2 */}
-            <motion.div
-              whileHover={{ y: -10, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-2xl p-8 border border-gray-100 hover:border-teal-200 transition-all duration-300"
-            >
-              <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg">
-                <i className="fa-solid fa-rocket text-white text-2xl"></i>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">
-                Reports
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Project reports tailored to your needs.
-              </p>
-            </motion.div>
-
-            {/* Feature Card 3 */}
-            <motion.div
-              whileHover={{ y: -10, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-2xl p-8 border border-gray-100 hover:border-purple-200 transition-all duration-300"
-            >
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg">
-                <i className="fa-solid fa-diagram-project text-white text-2xl"></i>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">
-                College Projects
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                End-to-end support for academic projects with quality assurance.
-              </p>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-12"
+          <motion.aside
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.08 }}
+            className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm h-max"
           >
-            <Link
-              to="/signup"
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg text-center text-lg"
-            >
-              Get Started with ProLance
-            </Link>
-            <Link
-              to="/login"
-              className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 font-semibold rounded-2xl transition-all duration-300 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 hover:scale-105 text-center text-lg"
-            >
-              Sign Up
-            </Link>
-          </motion.div>
-        </motion.section>
-
-        {/* Features Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-20"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-center group"
-          >
-            <div className="bg-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-              <svg
-                className="w-10 h-10 text-blue-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-              Quality Guaranteed
-            </h3>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Professional work delivered by experienced developers
-            </p>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-center group"
-          >
-            <div className="bg-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-              <svg
-                className="w-10 h-10 text-teal-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-              On-Time Delivery
-            </h3>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Meet your deadlines with our reliable delivery system
-            </p>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-center group"
-          >
-            <div className="bg-white rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-              <svg
-                className="w-10 h-10 text-purple-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-              24/7 Support
-            </h3>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Get help anytime with our dedicated support team
-            </p>
-          </motion.div>
-        </motion.div>
-
-        {/* How it works */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 sm:p-12 lg:p-16"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-12">
-            How ProLance Works
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {[
-              {
-                num: "1",
-                title: "Submit Project",
-                desc: "Fill out our detailed project form with your requirements",
-              },
-              {
-                num: "2",
-                title: "Get Quote",
-                desc: "Receive a fair price quote within 24 hours",
-              },
-              {
-                num: "3",
-                title: "Track Progress",
-                desc: "Monitor your project progress in real-time",
-              },
-              {
-                num: "4",
-                title: "Receive Delivery",
-                desc: "Get your completed project before deadline",
-              },
-            ].map((step, index) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center group"
-              >
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  {step.num}
+            <h3 className="text-xl font-bold text-gray-900">Spaces for you</h3>
+            <p className="text-sm text-emerald-700 font-semibold mt-1">Explore all spaces</p>
+            <div className="mt-4 space-y-3">
+              {suggestedBowls.map((space) => (
+                <div key={space.name} className="border border-gray-200 rounded-xl p-3">
+                  <p className="font-semibold text-gray-900">{space.name}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{space.members}</p>
+                  <p className="text-sm text-gray-600 mt-1">{space.desc}</p>
+                  <div className="mt-3 flex gap-2">
+                    <button className="px-3 py-1.5 text-sm rounded-lg border border-gray-300 hover:bg-gray-50">
+                      View
+                    </button>
+                    <button className="px-3 py-1.5 text-sm rounded-lg bg-gray-900 text-white hover:bg-black">
+                      Join
+                    </button>
+                  </div>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+              ))}
+            </div>
+          </motion.aside>
+        </div>
       </div>
       <Footer />
     </div>

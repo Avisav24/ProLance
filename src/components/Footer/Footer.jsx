@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      {/* Divider */}
-      <div className="w-full h-1 bg-gradient-to-r from-blue-100 via-blue-300 to-blue-100 opacity-60 mb-0"></div>
-      <footer className="bg-gradient-to-r from-gray-900 via-blue-900 to-gray-800 text-white py-10 animate-fadeIn">
+      <div className="w-full h-px bg-gray-200 mb-0"></div>
+      <footer className="bg-white text-gray-800 py-10 animate-fadeIn">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20 items-center">
             {/* Quick Links */}
@@ -16,7 +15,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/"
-                    className="hover:text-blue-400 transition-colors"
+                    className="hover:text-gray-900 transition-colors"
                   >
                     Home
                   </Link>
@@ -24,7 +23,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/about"
-                    className="hover:text-blue-400 transition-colors"
+                    className="hover:text-gray-900 transition-colors"
                   >
                     About
                   </Link>
@@ -37,8 +36,8 @@ const Footer = () => {
                 <span className="text-blue-400">Pro</span>
                 <span className="text-pink-400">Lance</span>
               </span>
-              <span className="text-lg text-blue-200 font-semibold tracking-wide">
-                Empowering Your Projects
+              <span className="text-lg text-gray-500 font-semibold tracking-wide">
+                Build with confidence
               </span>
             </div>
             {/* Social & Legal */}
@@ -47,21 +46,21 @@ const Footer = () => {
               <div className="flex justify-center md:justify-end space-x-3 mb-6">
                 <a
                   href="#"
-                  className="bg-white/10 hover:bg-blue-600 transition-colors rounded-full p-2 text-2xl"
+                  className="bg-gray-100 hover:bg-gray-200 transition-colors rounded-full p-2 text-2xl"
                 >
                   <i className="fab fa-instagram"></i>
                 </a>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-gray-500">
                 <p>&copy; 2025 ProLance. All rights reserved.</p>
                 <p className="mt-2">
-                  <a href="#" className="hover:text-blue-400 transition-colors">
+                  <a href="#" className="hover:text-gray-800 transition-colors">
                     Privacy Policy
                   </a>{" "}
                   |
                   <a
                     href="#"
-                    className="hover:text-blue-400 transition-colors ml-1"
+                    className="hover:text-gray-800 transition-colors ml-1"
                   >
                     Terms of Service
                   </a>

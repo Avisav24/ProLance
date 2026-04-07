@@ -143,8 +143,7 @@ const LandingPage = () => {
             transition={{ duration: 0.45 }}
             className="space-y-4"
           >
-            <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm relative overflow-hidden">
-              <div className="absolute -right-6 -top-6 w-20 h-20 rounded-full bg-emerald-100"></div>
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
               <p className="text-sm text-gray-500">Post anonymously as</p>
               <p className="font-semibold text-gray-900">Product Designer</p>
               <button className="mt-4 px-4 py-2 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-black transition-colors">
@@ -175,8 +174,7 @@ const LandingPage = () => {
               transition={{ duration: 0.45, delay: 0.05 }}
               className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm"
             >
-              <div className="w-full rounded-xl bg-gray-100 px-4 py-3 text-gray-400 mb-3 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-gray-300"></span>
+              <div className="w-full rounded-xl bg-gray-100 px-4 py-3 text-gray-400 mb-3">
                 Search for discussions
               </div>
               <div className="rounded-xl border border-gray-200 px-4 py-3 text-gray-500">
@@ -192,26 +190,18 @@ const LandingPage = () => {
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h4 className="font-semibold text-gray-900">
-                    The Worklife Space
-                  </h4>
+                  <h4 className="font-semibold text-gray-900">The Worklife Space</h4>
                   <p className="text-sm text-gray-500">Community Manager</p>
                 </div>
                 <span className="text-xs text-gray-400">3d</span>
               </div>
 
               <p className="mt-3 text-gray-800 font-medium">
-                Early in your career, what impacted your quality of life the
-                most?
+                Early in your career, what impacted your quality of life the most?
               </p>
 
               <div className="mt-4 rounded-xl border border-gray-200 overflow-hidden text-sm font-medium text-gray-700">
-                {[
-                  "Housing affordability",
-                  "Job/growth opportunities",
-                  "Work-life balance",
-                  "Other (comment)",
-                ].map((item) => (
+                {["Housing affordability", "Job/growth opportunities", "Work-life balance", "Other (comment)"].map((item) => (
                   <button
                     key={item}
                     className="w-full text-left px-4 py-3 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors"
@@ -221,7 +211,7 @@ const LandingPage = () => {
                 ))}
               </div>
 
-              <div className="mt-4 flex items-center gap-5 text-sm text-gray-500 border-t border-gray-100 pt-3">
+              <div className="mt-4 flex items-center gap-5 text-sm text-gray-500">
                 <span>Like</span>
                 <span>58 comments</span>
                 <span>2 shares</span>
@@ -234,9 +224,7 @@ const LandingPage = () => {
               transition={{ duration: 0.45, delay: 0.18 }}
               className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm"
             >
-              <h4 className="font-semibold text-gray-900">
-                Built for outcomes, not just tasks
-              </h4>
+              <h4 className="font-semibold text-gray-900">Built for outcomes, not just tasks</h4>
               <p className="mt-2 text-gray-600 leading-relaxed">
                 ProLance helps you ship full assignments and project work with
                 clear milestones in {text}
@@ -250,13 +238,13 @@ const LandingPage = () => {
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link
                   to="/signup"
-                  className="soft-button-dark text-sm"
+                  className="px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-black transition-colors"
                 >
                   Start project
                 </Link>
                 <Link
                   to="/login"
-                  className="soft-button text-sm"
+                  className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
                 >
                   Sign in
                 </Link>
@@ -271,19 +259,12 @@ const LandingPage = () => {
             className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm h-max"
           >
             <h3 className="text-xl font-bold text-gray-900">Spaces for you</h3>
-            <p className="text-sm text-emerald-700 font-semibold mt-1">
-              Explore all spaces
-            </p>
+            <p className="text-sm text-emerald-700 font-semibold mt-1">Explore all spaces</p>
             <div className="mt-4 space-y-3">
               {suggestedBowls.map((space) => (
-                <div
-                  key={space.name}
-                  className="border border-gray-200 rounded-xl p-3"
-                >
+                <div key={space.name} className="border border-gray-200 rounded-xl p-3">
                   <p className="font-semibold text-gray-900">{space.name}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    {space.members}
-                  </p>
+                  <p className="text-xs text-gray-500 mt-0.5">{space.members}</p>
                   <p className="text-sm text-gray-600 mt-1">{space.desc}</p>
                   <div className="mt-3 flex gap-2">
                     <button className="px-3 py-1.5 text-sm rounded-lg border border-gray-300 hover:bg-gray-50">

@@ -142,9 +142,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f4f5f7] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute -top-28 -left-28 w-80 h-80 rounded-full bg-blue-100 blur-3xl opacity-70"></div>
-      <div className="absolute -bottom-28 -right-28 w-80 h-80 rounded-full bg-emerald-100 blur-3xl opacity-70"></div>
+    <div className="min-h-screen flex items-center justify-center bg-brand-gradient py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         {/* Brave Browser Warning */}
         {isBrave && (
@@ -162,11 +160,11 @@ const Signup = () => {
           </div>
         )}
 
-        <div className="bg-white rounded-3xl shadow-sm p-8 sm:p-10 border border-gray-200">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-10 border border-white/20">
           <div>
             <div className="flex justify-center mb-6 group">
               <div className="relative">
-                <div className="absolute -inset-3 bg-gray-100 rounded-full blur-lg opacity-80 transition-opacity duration-300"></div>
+                <div className="absolute -inset-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
                 <span className="relative inline-block text-4xl sm:text-5xl font-extrabold tracking-tight transform transition-transform duration-300 group-hover:scale-105">
                   <span className="text-blue-700">Pro</span>
                   <span className="text-pink-500">Lance</span>
@@ -454,9 +452,11 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-4 px-6 text-base font-semibold text-white rounded-2xl transition-all duration-300 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                className="group relative w-full flex justify-center py-4 px-6 text-base font-semibold text-white rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none overflow-hidden"
                 style={{
-                  background: loading ? "#9CA3AF" : "#111827",
+                  background: loading
+                    ? "#E5E7EB"
+                    : "linear-gradient(135deg, #2563EB, #3B82F6)",
                 }}
               >
                 <span className="relative z-10">
@@ -473,7 +473,7 @@ const Signup = () => {
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{
-                      background: "#000000",
+                      background: "linear-gradient(135deg, #1D4ED8, #2563EB)",
                     }}
                   ></div>
                 )}

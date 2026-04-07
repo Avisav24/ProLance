@@ -3,45 +3,49 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <header
-      className="bg-white border-b border-gray-200 sticky top-0 z-30"
+      className="bg-white/90 dark:bg-[#048d87]/95 backdrop-blur-md shadow-sm sticky top-0 z-30 transition-all duration-300"
       style={{
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)",
+        boxShadow:
+          "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       }}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Left: Logo and Brand */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 sm:ml-4 md:ml-8 lg:ml-12">
             <Link to="/" className="group">
-              <div className="transition-all duration-200 group-hover:opacity-80">
-                <span className="text-2xl sm:text-3xl font-black tracking-tight leading-none">
-                  <span className="text-emerald-700">Pro</span>
-                  <span className="text-emerald-500">Lance</span>
+              <div className="transition-all duration-300 group-hover:scale-105">
+                <span className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-none">
+                  <span className="text-blue-700">Pro</span>
+                  <span className="text-pink-500">Lance</span>
                 </span>
               </div>
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
-            <Link to="/" className="hover:text-gray-900">Community</Link>
-            <Link to="/about" className="hover:text-gray-900">Jobs</Link>
-            <Link to="/reviews" className="hover:text-gray-900">Companies</Link>
-            <Link to="/reviews" className="hover:text-gray-900">Salaries</Link>
-          </div>
-
           {/* Right: Auth Buttons + Toggle */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <Link
               to="/signup"
-              className="px-4 sm:px-5 py-2 text-sm font-semibold text-white rounded-lg bg-gray-900 hover:bg-black transition-colors"
+              className="relative px-4 sm:px-6 py-2 sm:py-2.5 text-sm font-medium text-white rounded-xl overflow-hidden group transition-all duration-300 hover:shadow-xl transform hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #2563EB, #3B82F6)",
+              }}
             >
-              Create post
+              <span className="relative z-10">Get Started</span>
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: "linear-gradient(135deg, #1D4ED8, #2563EB)",
+                }}
+              ></div>
             </Link>
             <Link
               to="/login"
-              className="px-4 sm:px-5 py-2 text-sm font-semibold rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors"
+              className="relative px-4 sm:px-6 py-2 sm:py-2.5 text-sm font-medium rounded-xl border-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg bg-white dark:bg-white text-gray-700 dark:text-gray-800 border-gray-200 dark:border-gray-200 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-50 hover:text-blue-700 dark:hover:text-blue-700 group"
             >
-              Sign In
+              <span className="relative z-10">Sign In</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
             </Link>
           </div>
         </div>

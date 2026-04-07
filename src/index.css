@@ -8,7 +8,7 @@
   }
   
   body {
-    @apply bg-[#f4f5f7] text-gray-900;
+    @apply bg-gray-50 text-gray-900;
   }
 }
 
@@ -90,6 +90,12 @@
   }
 } 
 body {
+  background: linear-gradient(
+    to bottom right,
+    #f8f6f8,
+    #ffe4e9,
+    #c8e5ff
+  );
   font-family: 'Inter', sans-serif;
   color: #111827;
 }

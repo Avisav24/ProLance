@@ -118,9 +118,12 @@ const Header = () => {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20"
       style={{
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)",
+        background:
+          "linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0.9))",
+        boxShadow:
+          "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -132,10 +135,11 @@ const Header = () => {
               className="flex items-center space-x-2 group"
             >
               <div className="relative">
-                <span className="text-2xl sm:text-3xl font-black tracking-tight leading-none transition-transform duration-300 group-hover:opacity-80 inline-block">
-                  <span className="text-emerald-700">Pro</span>
-                  <span className="text-emerald-500">Lance</span>
+                <span className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-none transition-transform duration-300 group-hover:scale-105 inline-block">
+                  <span className="text-blue-700">Pro</span>
+                  <span className="text-pink-500">Lance</span>
                 </span>
+                <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
               </div>
             </Link>
           </div>
@@ -147,7 +151,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="relative px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-300 rounded-lg group"
+                  className="relative px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-300 rounded-full group"
                   style={{
                     animation: `fadeInNav 0.3s ease-out ${index * 0.1}s both`,
                   }}
@@ -155,7 +159,7 @@ const Header = () => {
                   <span className="relative z-10 transition-colors duration-300 group-hover:text-blue-600">
                     {item.name}
                   </span>
-                  <div className="absolute inset-0 bg-gray-100 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-95 group-hover:scale-100"></div>
                 </Link>
               ))}
           </nav>

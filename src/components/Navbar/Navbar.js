@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import image from "./Gradely-G logo.png";
-import image1 from "./logo.jpg";
+
 const Navbar = () => {
   return (
     <header
@@ -15,12 +14,11 @@ const Navbar = () => {
           {/* Left: Logo and Brand */}
           <div className="flex items-center space-x-2 sm:ml-4 md:ml-8 lg:ml-12">
             <Link to="/" className="group">
-              <div className="w-16 h-10 sm:w-20 sm:h-11 overflow-hidden rounded-xl transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
-                <img
-                  src={image1}
-                  alt="Gradely Logo"
-                  className="w-full h-full object-cover"
-                />
+              <div className="transition-all duration-300 group-hover:scale-105">
+                <span className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-none">
+                  <span className="text-blue-700">Pro</span>
+                  <span className="text-pink-500">Lance</span>
+                </span>
               </div>
             </Link>
           </div>

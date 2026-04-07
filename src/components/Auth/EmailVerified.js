@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 
 const EmailVerified = () => (
   <div className="min-h-screen flex flex-col items-center justify-center bg-brand-gradient px-4 py-12">
-    <img
-      src="/gradely-removebg.png"
-      alt="Gradely Logo"
-      className="h-24 w-24 mb-6"
-    />
+    <span className="mb-6 text-4xl sm:text-5xl font-extrabold tracking-tight leading-none">
+      <span className="text-blue-700">Pro</span>
+      <span className="text-pink-500">Lance</span>
+    </span>
     <h1 className="text-2xl font-bold mb-4 text-center">Email Verified!</h1>
     <p className="text-gray-700 text-center max-w-md mb-8">
       Your email has been successfully verified. You can now sign in to your

@@ -1,6 +1,6 @@
 {
-  "short_name": "Gradely",
-  "name": "Gradely - College Project Delivery Service",
+  "short_name": "ProLance",
+  "name": "ProLance - College Project Delivery Service",
   "description": "Professional college project completion service",
   "start_url": "/",
   "display": "standalone",

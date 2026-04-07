@@ -121,7 +121,7 @@ const LandingPage = () => {
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight mb-4 sm:mb-6">
                 Say Goodbye to Project Stress. Hello,{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 block sm:inline mt-2 sm:mt-0">
-                  Gradely
+                  ProLance
                 </span>
               </h1>
 
@@ -195,7 +195,7 @@ const LandingPage = () => {
             </span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-            Gradely connects you with professional developers to complete your
+            ProLance connects you with professional developers to complete your
             college projects on time and with exceptional quality. Submit your
             requirements and get high-quality work delivered before your
             deadline.
@@ -274,7 +274,7 @@ const LandingPage = () => {
               to="/signup"
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg text-center text-lg"
             >
-              Get Started with Gradely
+              Get Started with ProLance
             </Link>
             <Link
               to="/login"
@@ -384,7 +384,7 @@ const LandingPage = () => {
           className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 sm:p-12 lg:p-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-12">
-            How Gradely Works
+            How ProLance Works
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {[

@@ -30,7 +30,7 @@ const Login = () => {
         toast.error("Please verify your email before signing in.");
         return;
       }
-      toast.success("Welcome back to Gradely!");
+      toast.success("Welcome back to ProLance!");
 
       // Redirect based on user role
       if (profile?.role === "admin") {
@@ -55,11 +55,10 @@ const Login = () => {
               <div className="flex justify-center mb-6 group">
                 <div className="relative">
                   <div className="absolute -inset-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <img
-                    src="/gradely-removebg.png"
-                    alt="Gradely Logo"
-                    className="relative h-24 w-24 object-contain transform transition-transform duration-300 group-hover:scale-110"
-                  />
+                  <span className="relative inline-block text-4xl sm:text-5xl font-extrabold tracking-tight transform transition-transform duration-300 group-hover:scale-105">
+                    <span className="text-blue-700">Pro</span>
+                    <span className="text-pink-500">Lance</span>
+                  </span>
                 </div>
               </div>
               <h2 className="mt-6 text-center text-3xl sm:text-4xl font-extrabold text-gray-900">
@@ -164,7 +163,7 @@ const Login = () => {
                     to="/signup"
                     className="font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
                   >
-                    Sign up for Gradely
+                    Sign up for ProLance
                   </Link>
                 </p>
               </div>

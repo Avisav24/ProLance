@@ -95,7 +95,7 @@ const Signup = () => {
       const userCredential = await signup(
         formData.email,
         formData.password,
-        userData
+        userData,
       );
 
       // Try to send verification email, but don't fail if rate limited
@@ -106,7 +106,7 @@ const Signup = () => {
             url: window.location.origin + "/verify-email",
           });
           toast.success(
-            "A verification email has been sent. Please verify your email before signing in."
+            "A verification email has been sent. Please verify your email before signing in.",
           );
         }
       } catch (emailError) {
@@ -114,12 +114,12 @@ const Signup = () => {
         if (emailError.code === "auth/too-many-requests") {
           // Still succeed with signup, just inform about email
           toast.success(
-            "Account created successfully! The verification email will be sent shortly due to high traffic."
+            "Account created successfully! The verification email will be sent shortly due to high traffic.",
           );
         } else {
           // For other email errors, still succeed but inform user
           toast.success(
-            "Account created! Please check your email for verification or request a new one from your profile."
+            "Account created! Please check your email for verification or request a new one from your profile.",
           );
         }
       }
@@ -129,7 +129,7 @@ const Signup = () => {
       console.error("Signup error:", error);
       if (error.code === "auth/too-many-requests") {
         toast.error(
-          "Too many signup attempts. Please wait a few minutes and try again."
+          "Too many signup attempts. Please wait a few minutes and try again.",
         );
       } else if (error.code === "auth/email-already-in-use") {
         toast.error("This email is already in use. Please sign in instead.");
@@ -165,18 +165,17 @@ const Signup = () => {
             <div className="flex justify-center mb-6 group">
               <div className="relative">
                 <div className="absolute -inset-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                <img
-                  src="/gradely-removebg.png"
-                  alt="Gradely Logo"
-                  className="relative h-24 w-24 object-contain transform transition-transform duration-300 group-hover:scale-110"
-                />
+                <span className="relative inline-block text-4xl sm:text-5xl font-extrabold tracking-tight transform transition-transform duration-300 group-hover:scale-105">
+                  <span className="text-blue-700">Pro</span>
+                  <span className="text-pink-500">Lance</span>
+                </span>
               </div>
             </div>
             <h2 className="mt-6 text-center text-3xl sm:text-4xl font-extrabold text-gray-900">
               Create your account
             </h2>
             <p className="mt-3 text-center text-base sm:text-lg text-gray-600">
-              Join Gradely and get your college projects completed
+              Join ProLance and get your college projects completed
               professionally
             </p>
           </div>
@@ -488,7 +487,7 @@ const Signup = () => {
                   to="/login"
                   className="font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
                 >
-                  Sign in to Gradely
+                  Sign in to ProLance
                 </Link>
               </p>
             </div>

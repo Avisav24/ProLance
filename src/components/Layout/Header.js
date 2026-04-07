@@ -135,11 +135,10 @@ const Header = () => {
               className="flex items-center space-x-2 group"
             >
               <div className="relative">
-                <img
-                  src="/logo.png"
-                  alt="Gradely Logo"
-                  className="h-10 transition-transform duration-300 group-hover:scale-110"
-                />
+                <span className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-none transition-transform duration-300 group-hover:scale-105 inline-block">
+                  <span className="text-blue-700">Pro</span>
+                  <span className="text-pink-500">Lance</span>
+                </span>
                 <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
               </div>
             </Link>
@@ -288,7 +287,7 @@ const Header = () => {
                                     <p className="text-xs text-gray-400 mt-2">
                                       {notification.createdAt?.toDate?.()
                                         ? new Date(
-                                            notification.createdAt.toDate()
+                                            notification.createdAt.toDate(),
                                           ).toLocaleString()
                                         : "Just now"}
                                     </p>

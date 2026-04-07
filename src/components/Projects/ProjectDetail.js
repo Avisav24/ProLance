@@ -86,7 +86,7 @@ const ProjectDetail = () => {
           userProfile?.name || currentUser.email
         }.`,
         "info",
-        project.id
+        project.id,
       );
 
       toast.success("Payment proof submitted successfully");
@@ -501,7 +501,7 @@ const ProjectDetail = () => {
                         <span className="mt-2 text-gray-600 text-sm text-center">
                           Submit the proof Screenshot at{" "}
                           <span className="font-semibold">
-                            gradelybusiness@gmail.com
+                            prolancebusiness@gmail.com
                           </span>
                           , with your details.
                         </span>
@@ -703,7 +703,7 @@ const ProjectDetail = () => {
                         Delivered on:{" "}
                         {project.deliveredAt
                           ? new Date(
-                              project.deliveredAt.toDate()
+                              project.deliveredAt.toDate(),
                             ).toLocaleDateString()
                           : "Recently"}
                       </div>

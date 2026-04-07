@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -13,26 +13,58 @@ const Footer = () => {
             <div className="text-center md:text-left">
               <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><Link to="/" className="hover:text-blue-400 transition-colors">Home</Link></li>
-                <li><Link to="/about" className="hover:text-blue-400 transition-colors">About</Link></li>
+                <li>
+                  <Link
+                    to="/"
+                    className="hover:text-blue-400 transition-colors"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/about"
+                    className="hover:text-blue-400 transition-colors"
+                  >
+                    About
+                  </Link>
+                </li>
               </ul>
             </div>
             {/* Center Logo or Slogan */}
             <div className="flex flex-col items-center justify-center my-6 md:my-0">
-              <img src="/gradely-removebg.png" alt="Gradely Logo" className="h-24 mb-2 animate-fadeIn" />
-              <span className="text-lg text-blue-200 font-semibold tracking-wide">Empowering Your Projects</span>
+              <span className="mb-2 animate-fadeIn text-4xl sm:text-5xl font-extrabold tracking-tight leading-none">
+                <span className="text-blue-400">Pro</span>
+                <span className="text-pink-400">Lance</span>
+              </span>
+              <span className="text-lg text-blue-200 font-semibold tracking-wide">
+                Empowering Your Projects
+              </span>
             </div>
             {/* Social & Legal */}
             <div className="md:text-right text-center">
               <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
               <div className="flex justify-center md:justify-end space-x-3 mb-6">
-                <a href="#" className="bg-white/10 hover:bg-blue-600 transition-colors rounded-full p-2 text-2xl"><i className="fab fa-instagram"></i></a>
+                <a
+                  href="#"
+                  className="bg-white/10 hover:bg-blue-600 transition-colors rounded-full p-2 text-2xl"
+                >
+                  <i className="fab fa-instagram"></i>
+                </a>
               </div>
               <div className="text-sm text-gray-400">
-                <p>&copy; 2025 Gradely. All rights reserved.</p>
+                <p>&copy; 2025 ProLance. All rights reserved.</p>
                 <p className="mt-2">
-                  <a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a> |
-                  <a href="#" className="hover:text-blue-400 transition-colors ml-1">Terms of Service</a>
+                  <a href="#" className="hover:text-blue-400 transition-colors">
+                    Privacy Policy
+                  </a>{" "}
+                  |
+                  <a
+                    href="#"
+                    className="hover:text-blue-400 transition-colors ml-1"
+                  >
+                    Terms of Service
+                  </a>
                 </p>
               </div>
             </div>
